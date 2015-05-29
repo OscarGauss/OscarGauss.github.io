@@ -2,143 +2,48 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Gramáticas Regulares Lineales Derechas</title>
-	<link href="style.css" type="text/css" rel="stylesheet">
-	<script src="codigo.js"></script>
+	<title>Gramáticas Regulares</title>
+	<script src="codigo.js">
+	</script>
+	<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-	<h1  align=center>Gramaticas Regulares Lineales Derechas
-	</h1>
-	<p align="center">
-		<input type="button" value="GENERAR" id="button1" onclick="GuardarGramatica()"/>
-	</p>
-	<table class="tablaprincipal" width=100%>
-		<tr>
-			<th width=34%>
-				<h2>GRAMÁTICA REGULAR LINEAL DERECHA</h2>
-				<h3>ORIGINAL</h3>
-			</th>
-			<th width=33%>
-				<h3>Gramática sin producciones</h3>
-				<h3>S-->xS</h3>
-			</th>
-			<th width=33%>
-				<h3>Gramática sin producciones</h3>
-				<h3>A-->xS</h3>
-			</th>
-		</tr>
-		<tr>
-			<td align=center>
-				<form name="gramatica" id="form1" action="#" onSubmit="return GuardarGramatica()">
-					<p>Alfabeto de No Terminales</p>
-					<p><input type="text" name="nt" id="nntt" value="S X Y A" /></p>
-					<p>Alfabeto de Terminales</p>
-					<p><input type="text" name="t" id="tt"  value="a b c" /></p>
-					<p>Símbolo raíz S</p>
-					<p>Producciones 
-						<input type="text" id="numpro" value="5" maxlength="2" size="4" />
-						<input type="button" value="CLIC" id="button1" onclick="CrearTabla(document.getElementById('numpro').value)"/>
-					</p>
-				</form>
-			</td>
-			<td align=center>
-				<form name="gramatica" action="#" onSubmit="return guardargramatica()">
-					<p>Alfabeto de No Terminales</p>
-					<p><input type="text" name="nt" id="1nntt" value="" /></p>
-					<p>Alfabeto de Terminales</p>
-					<p><input type="text" name="t" id="1tt"  value="" /></p>
-					<p>Símbolo raíz S</p>
-					<p>Producciones <input type="text" name="np" id="1numpro" value="" maxlength="2" size="4" />
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I1" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D1" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I2" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D2" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I3" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D3" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I4" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D4" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I5" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D5" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I6" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D6" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I7" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D7" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I8" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D8" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I9" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D9" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I10" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D10" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I11" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D11" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I12" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D12" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I13" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D13" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I14" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D14" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I15" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D15" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I16" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D16" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I17" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D17" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I18" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D18" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I19" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D19" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="1I20" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="1D20" value="" /></p>
-				</form>
-			</td>
-			<td align=center>
-				<form name="gramatica" action="#" onSubmit="return guardargramatica()">
-					<p>Alfabeto de No Terminales</p>
-					<p><input type="text" name="nt" id="2nntt" value="" /></p>
-					<p>Alfabeto de Terminales</p>
-					<p><input type="text" name="t" id="2tt"  value="" /></p>
-					<p>Símbolo raíz S</p>
-					<p>Producciones <input type="text" name="np" id="2numpro" value="" maxlength="2" size="4" />
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I1" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D1" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I2" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D2" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I3" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D3" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I4" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D4" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I5" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D5" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I6" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D6" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I7" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D7" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I8" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D8" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I9" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D9" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I10" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D10" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I11" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D11" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I12" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D12" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I13" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D13" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I14" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D14" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I15" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D15" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I16" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D16" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I17" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D17" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I18" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D18" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I19" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D19" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="2I20" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="2D20" value="" /></p>
-				</form>
-			</td>
-		</tr>
-		<tr>
-			<th colspan="3">
-				<h3>GRAMÁTICA REGULAR LINEAL IZQUIERDA</h3>
-			</th>
-		</tr>
-		<tr  align=center>
-			<td colspan="3">
-				<form name="gramatica" action="#" onSubmit="return guardargramatica()">
-					<p>Alfabeto de No Terminales</p>
-					<p><input type="text" name="nt" id="3nntt" value="" /></p>
-					<p>Alfabeto de Terminales</p>
-					<p><input type="text" name="t" id="3tt"  value="" /></p>
-					<p>Símbolo raíz S</p>
-					<p>Producciones <input type="text" name="np" id="3numpro" value="" maxlength="2" size="4" />
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I1" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D1" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I2" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D2" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I3" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D3" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I4" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D4" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I5" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D5" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I6" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D6" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I7" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D7" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I8" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D8" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I9" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D9" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I10" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D10" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I11" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D11" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I12" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D12" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I13" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D13" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I14" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D14" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I15" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D15" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I16" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D16" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I17" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D17" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I18" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D18" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I19" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D19" value="" /></p>
-					<p><input type="text" name="I" maxlength="1" size="4" id="3I20" value="" />&rarr;<input type="text" name="D" maxlength="2" size="4" id="3D20" value="" /></p>
-				</form>
-			</td>
-		</tr>
-	</table>
+	<header>
+		<h1>
+			Lenguajes Formales y Automatas
+		</h1>
+		<p>
+			Gramáticas
+		</p>
+	</header>
+	<div id="contenido">
+		<article>
+			<header>
+				<h1>
+					Gramáticas Regulares	
+				</h1>
+			</header>
+			<p>
+				Se veran las más importantes conversiones genericas:
+			</p>
+			<ul>
+				<li><a href="#">Construcción de una Gramática Regular Lineal Derecha cuyo símbolo raíz no aparezca en ninguna parte derecha de las producciones </a></li>
+				<li><a href="/Automatas/grld.html">Construcción de una Gramática Regular Lineal Izquierda a partir de una Gramática Regular Lineal Derecha </a></li>
+				<li><a href="#">Construcción de una Gramática Regular Lineal Derecha a partir de un Automata Finito Deterministico A </a></li>
+				<li><a href="#">Construcción de una Gramática Regular Lineal Derecha a partir de un Automata Finito No deterministico A </a></li>
+				<li><a href="#">Construcción de un Automata Finito No Deterministico A a partir de una Gramática Regular Lineal Derecha G</a></li>
+				<li><a href="#">Construcción de un Automata Finito Deterministico A' no reinicializable a partir de un Automata Finito Deterministico A reinicializable</a></li>
+				<li><a href="#">Construcción de un Automata Finito No deterministico A' a partir de un Automata Finito Deterministico A</a></li>
+				<li><a href="#">Construcción de un Automata Finito Deterministico A' a partir de un Automata Finito No deterministico A</a></li>
+				<li><a href="#">Construcción de un Automata Finito Deterministico A'con el alfabeto extendido a partir de un Automata Finito Deterministico A</a></li>
+				<li><a href="#">Construcción de un Automata Finito No de terministico A' a partir de un &lambda; -Automata Finito No deterministico A</a></li>
+				<li><a href="#">Construcción de un autómata a partir de una expresion regular</a></li>
+				<li><a href="#">Construcción de una expresión regular a partir de un Automata A</a></li>
+				<li><a href="#">Construcción de un Automata Finito Deterministico accesible a partir de un Automata Finito Deterministico cualquiera</a></li>
+				<li><a href="#">Construcción de un Automata Finito Deterministico con el menor número posible de estados a partir de un Automata Finito Deterministico cualquiera (minimizacion de AFD's)</a></li>
+			</ul>			
+		</article>
+	</div>
+	
 </body>

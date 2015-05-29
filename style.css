@@ -1,0 +1,53 @@
+body {
+	background: #E8F1FF;
+	color: #FFFFFF;
+}
+header {
+	width: 100%;
+	/*height: 60px;
+	/*margin: 2%;*/
+	text-align: center;
+	background: #3A6FC4;
+	font-size: 200%;
+	color: #A7C9FF;
+}
+
+header h1{
+	letter-spacing: 4px;
+	text-transform: uppercase;
+}
+ul li a{
+	text-decoration: none;
+}
+
+ul li a:hover{
+	background: #3A6FC4;
+	color: #A7C9FF;
+}
+article {
+	background: #5B92E4;
+}
+
+
+
+/*asdf*/
+.tablaprincipal {
+	border-spacing: 1em;
+	color: #5882FA;
+	background-color: #2E64FE;
+}
+
+table th {background-color: #5882FA; color: #FFFFFF;}
+table tr {background-color: #5882FA; color: #FFFFFF;}
+h1 {background-color: #5882FA; color: #FFFFFF;}
+textarea{
+    font: 20px "Times New Roman", Times, serif;
+}
+#button1 {
+  display: block;
+  width: 200px;
+  height: 50px;
+  color: #FFFFFF;
+  background-color: #5882FA;
+  font: 30px "Times New Roman";
+}

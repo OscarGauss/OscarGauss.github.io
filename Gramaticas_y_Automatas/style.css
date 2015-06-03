@@ -10,9 +10,9 @@ header {
 	letter-spacing: 4px;
 }
 
-header #boton {	background: #5882FA; }
+#boton {	background: #5882FA; }
 
-header #boton:hover{ background: #A7C9FF; color: #5882FA; }
+#boton:hover{ background: #A7C9FF; color: #5882FA; }
 
 ul li a { text-decoration: none; }
 

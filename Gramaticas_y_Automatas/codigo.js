@@ -29,15 +29,9 @@ function limpiar_reload(form1, form2){
 	location.reload();
 }
 
-function is_in(Arr, val){ //visitado
+function is_in(Arr, val){
 	for(var i=0; i<Arr.length; i++) if(Arr[i]==val) return true;
 	return false;
-}
-
-function vaciar(Producciones){ //reverse
-	var ProAux = [];
-	for(var i=0; i<Producciones.length; i++) ProAux.unshift(Producciones[i]);
-	return ProAux;
 }
 
 function siguiente_letra(Existentes){
@@ -112,7 +106,6 @@ function procesar_grld_eli_s_der(form1, form2){
 }
 
 function procesar_grli_de_grld(form1, form2){
-	alert("Procesar_grli_de_grld");
 	var Gram = guardar_gramatica(form1);
 	if(!is_grld(Gram)){ alert("No es una gramatica válida"); return ; }
 	if(is_procesar_grld_eli_s_der(Gram)){ alert("Primero se debe eliminar las producciones cuyo simbolo raíz no aparezca en ninguna parte derecha de las producciones"); return ; }
@@ -131,51 +124,24 @@ function procesar_grli_de_grld(form1, form2){
 				}
 			Grafo.unshift({nodo:nod, edges:Aux}); //nod = edges
 		}
-	alert("Se armo el grafo");
 	// Se 'invierte el grafo' y se hallan las nuevas producciones
 	var NuevasProducciones = [];
-	for(var i=0; i<Grafo.length; i++){
+	for(var i=0; i<Grafo.length; i++)
 		for(var j=0; j<Grafo[i].edges.length; j++){
 			var aux;
-			if(Grafo[i].nodo=="S" && Grafo[i].edges[j].noter==lambda){
+			if(Grafo[i].nodo=="S" && Grafo[i].edges[j].noter==lambda)
 				aux = { izq:"S", der:Grafo[i].edges[j].ter};
-			}else{
-				if(Grafo[i].edges[j].noter==lambda){
+			else
+				if(Grafo[i].edges[j].noter==lambda)
 					aux = { izq:"S", der:Grafo[i].nodo+Grafo[i].edges[j].ter};
-				}else{
-					if(Grafo[i].nodo=="S"){
+				else
+					if(Grafo[i].nodo=="S")
 						aux = { izq:Grafo[i].edges[j].noter, der:Grafo[i].edges[j].ter};
-					}else{
+					else
 						aux = { izq:Grafo[i].edges[j].noter, der:Grafo[i].nodo+Grafo[i].edges[j].ter};
-					}
-				}
-			}
 			NuevasProducciones.push(aux);
 		}
-	}
-	//////////////////////////////////////////////////
-	// y por ultimo Llenar valores en el formulario 3///////////////
-	alert("Proceso echo");
+	alert("Proceso hecho");
 	Gram.P=NuevasProducciones;
 	mostrar_gramatica(Gram, form2);
-	/*cad="";
-	for(var i=0; i<NoTerminales.length; i++){
-		cad+=NoTerminales[i]+" ";
-	}
-	document.getElementById("3nntt").value=cad;
-	cad="";
-	for(var i=0; i<Terminales.length; i++){
-		cad+=Terminales[i]+" ";
-	}
-	document.getElementById("3tt").value=cad;
-	document.getElementById("3numpro").value=NuevasProducciones.length;
-	NuevasProducciones = vaciar(NuevasProducciones);
-	for(var i=0; i<NuevasProducciones.length; i++){
-		idi = "3I"+(i+1);
-		idd = "3D"+(i+1);
-		document.getElementById(idi).value=NuevasProducciones[i].izq;
-		document.getElementById(idd).value=NuevasProducciones[i].der;
-	}
-	*/
-	/////////////////////////////////////////////////
 }

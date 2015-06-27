@@ -31,10 +31,11 @@
 			  <p><input type="text" name="nt" id="form1nt" placeholder="S A" /></p>
 			  <p>Alfabeto de Terminales</p>
 			  <p><input type="text" name="t" id="form1t"  placeholder="a" /></p>
-			  <p>Símbolo raíz S</p>
+			  <p>Símbolo raíz</p>
+			  <p>S</p>
 			  <p>Producciones 
                 <input type="text" name="np" id="form1np" placeholder="2" maxlength="2" size="4" />
-                <input type="button" value="CLIC" onclick="crear_tabla(document.getElementById('form1np').value, 'form1')"/>
+                <input type="button" value="CLIC" onclick="crear_tabla_gram('form1')"/>
 			  </p>
             </form>
 		  </td>
@@ -44,14 +45,18 @@
 			  <p><input type="text" name="nt" id="form2nt" /></p>
 			  <p>Alfabeto de Terminales</p>
 			  <p><input type="text" name="t" id="form2t" /></p>
-			  <p>Símbolo raíz S</p>
+			  <p>Símbolo raíz</p>
+			  <p>S</p>
 			  <p>Producciones<input type="text" name="np" id="form2np" maxlength="2" size="4" />
 			  </p>
             </form>
 		  </td>
 		<tr>
-		  <td colspan="2">
-			<div id="boton" onclick="limpiar_reload('form1', 'form2')">Limpiar</div>
+		  <td>
+			<div id="boton" onclick="limpiar_gram('form1')">Limpiar</div>
+		  </td>
+		  <td>
+			<div id="boton" onclick="limpiar_gram('form2')">Limpiar</div>
 		  </td>
 		</tr>
         </tr>

@@ -60,7 +60,7 @@
 			  <p><input type="text" name="ef" id="form1ef"  placeholder="q2 q3" /></p>
 			  <p>Función de transición &delta; </p>
 			  <p> Número de reglas de transición
-                <input type="text" name="nrt" id="form1nrt" placeholder="2" maxlength="2" size="4" />
+                <input type="text" name="nrt" id="form1nrt" placeholder="2" maxlength="2" size="4" readonly/>
                 <input type="button" value="CLIC" onclick="crear_tabla_afd('form1')"/>
 			  </p>
             </form>
@@ -74,11 +74,12 @@
 		  <td>
 			<form name="gramatica" id="form2">
 			  <p>Alfabeto de No Terminales</p>
-			  <p><input type="text" name="nt" id="form2nt" /></p>
+			  <p><input type="text" name="nt" id="form2nt"/></p>
 			  <p>Alfabeto de Terminales</p>
-			  <p><input type="text" name="t" id="form2t" /></p>
-			  <p>Símbolo raíz S</p>
-			  <p>Producciones<input type="text" name="np" id="form2np" maxlength="2" size="4" />
+			  <p><input type="text" name="t" id="form2t"/></p>
+			  <p>Símbolo raíz</p>
+			  <p>S</p>
+			  <p>Producciones<input type="text" name="np" id="form2np" maxlength="2" size="4"/>
 			  </p>
             </form>
 		  </td>

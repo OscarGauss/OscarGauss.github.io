@@ -20203,6 +20203,7 @@ return /******/ (function(modules) { // webpackBootstrap
       case 'database':      this.draw = this._drawDatabase; this.resize = this._resizeDatabase; break;
       case 'box':           this.draw = this._drawBox; this.resize = this._resizeBox; break;
       case 'circle':        this.draw = this._drawCircle; this.resize = this._resizeCircle; break;
+      case 'circle2':       this.draw = this._drawCircle2; this.resize = this._resizeCircle; break;  // CAMBIO
       case 'ellipse':       this.draw = this._drawEllipse; this.resize = this._resizeEllipse; break;
       // TODO: add diamond shape
       case 'image':         this.draw = this._drawImage; this.resize = this._resizeImage; break;
@@ -20778,6 +20779,33 @@ return /******/ (function(modules) { // webpackBootstrap
 
   Node.prototype._drawRawCircle = function (ctx, x, y, radius) {
     var clusterLineWidth = 2.5;
+    var borderWidth = this.options.borderWidth;
+    var selectionLineWidth = this.options.borderWidthSelected || 2 * this.options.borderWidth;
+      
+    ctx.strokeStyle = this.selected ? this.options.color.highlight.border : this.hover ? this.options.color.hover.border : this.options.color.border;
+
+    // draw the outer border
+    if (this.clusterSize > 1) {
+      ctx.lineWidth = (this.selected ? selectionLineWidth : borderWidth) + ((this.clusterSize > 1) ? clusterLineWidth : 0.0);
+      ctx.lineWidth *= this.networkScaleInv;
+      ctx.lineWidth = Math.min(this.width,ctx.lineWidth);
+
+      ctx.circle(x, y, radius+2*ctx.lineWidth);
+      ctx.stroke();
+    }
+    ctx.lineWidth = (this.selected ? selectionLineWidth : borderWidth) + ((this.clusterSize > 1) ? clusterLineWidth : 0.0);
+    ctx.lineWidth *= this.networkScaleInv;
+    ctx.lineWidth = Math.min(this.width,ctx.lineWidth);
+
+    ctx.fillStyle = this.selected ? this.options.color.highlight.background : this.hover ? this.options.color.hover.background : this.options.color.background;
+    ctx.circle(this.x, this.y, radius);
+    ctx.fill();
+    ctx.stroke();
+  };
+  
+  ///CAMBIE
+  Node.prototype._drawRawCircle2 = function (ctx, x, y, radius) {
+    var clusterLineWidth = 2.5;
     var borderWidth = this.options.borderWidth+5;
     var selectionLineWidth = this.options.borderWidthSelected || 2 * this.options.borderWidth;
       
@@ -20801,7 +20829,23 @@ return /******/ (function(modules) { // webpackBootstrap
     ctx.fill();
     ctx.stroke();
   };
+  
+   Node.prototype._drawCircle2 = function (ctx) {
+    this._resizeCircle(ctx);
+    this.left = this.x - this.width / 2;
+    this.top = this.y - this.height / 2;
 
+    this._drawRawCircle2(ctx, this.x, this.y, this.options.radius);
+
+    this.boundingBox.top = this.y - this.options.radius;
+    this.boundingBox.left = this.x - this.options.radius;
+    this.boundingBox.right = this.x + this.options.radius;
+    this.boundingBox.bottom = this.y + this.options.radius;
+
+    this._label(ctx, this.label, this.x, this.y);
+  };
+  //////////CAMBIE
+  
   Node.prototype._drawCircle = function (ctx) {
     this._resizeCircle(ctx);
     this.left = this.x - this.width / 2;

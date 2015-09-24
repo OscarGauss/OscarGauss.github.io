@@ -19,10 +19,14 @@ function crear_tabla_gram(nom){
 		document.getElementById(nom).appendChild(pp);
     }
 }
+
 function crear_tabla_afd(nom){	
 	var estados = document.getElementById(nom+"es").value.trim().split(" ");
 	var alfabeto = document.getElementById(nom+"al").value.trim().split(" ");
-	var n=estados.length*alfabeto.length;
+	var n=document.getElementById(nom+"nrt").value;
+    for(var i=0; i<n; i++)
+		document.getElementById(nom).removeChild(document.getElementById(nom).getElementsByTagName('p')[10]);
+	n=estados.length*alfabeto.length;
 	document.getElementById(nom+"nrt").value=n;
     for(var i=1; i<=n; i++){
 		var pp= document.createElement("p");
@@ -69,9 +73,8 @@ function limpiar_aut(nom){
     document.getElementById(nom+"ef").value="";
     var n=document.getElementById(nom+"nrt").value;
     document.getElementById(nom+"nrt").value="";
-    for(var i=0; i<n; i++){
+    for(var i=0; i<n; i++)
 		document.getElementById(nom).removeChild(document.getElementById(nom).getElementsByTagName('p')[10]);
-	}
 }
 
 function is_in(Arr, val){
@@ -79,8 +82,21 @@ function is_in(Arr, val){
 	return false;
 }
 
-function siguiente_letra(Existentes){
+function siguiente_letra_M(Existentes){
     var Letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    var le=0;
+    for(le=0; le<Letras.length; le++){
+		var c=0;
+		for(var j=0; j<Existentes.length; j++)
+            if(Existentes[j]==Letras[le])
+                c++;
+		if(c==0)
+            break;
+    }
+    return Letras[le];
+}
+function siguiente_letra_m(Existentes){
+	var letras = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
     var le=0;
     for(le=0; le<Letras.length; le++){
 		var c=0;
@@ -169,7 +185,7 @@ function procesar_grld_eli_s_der(form1, form2){
 	if(!is_grld(Gram)){ alert("No es una gramatica válida"); return ; }
 	if(!is_procesar_grld_eli_s_der(Gram)){ alert("No es necesario convertir la gramática"); return ; }
 	
-    var Sprima=siguiente_letra(Gram.N); Gram.N.push(Sprima);
+    var Sprima=siguiente_letra_M(Gram.N); Gram.N.push(Sprima);
     for(var i=0; i<Gram.P.length; i++){
         Gram.P[i].der=Gram.P[i].der.replace("S", Sprima); Gram.P[i].der=Gram.P[i].der.replace("S", Sprima); // ojo n necesario si es GRLD
         Gram.P[i].izq=Gram.P[i].izq.replace("S", Sprima);
@@ -191,7 +207,7 @@ function procesar_grli_de_grld(form1, form2){
 	if(is_procesar_grld_eli_s_der(Gram)){ alert("Primero se debe eliminar las producciones cuyo simbolo raíz no aparezca en ninguna parte derecha de las producciones"); return ; }
 	//Primero generamos el grafo
 	var Grafo = [], Vis = [];
-	var lambda = siguiente_letra(Gram.N);
+	var lambda = siguiente_letra_M(Gram.N);
 	for(var i=0; i<Gram.P.length; i++)
 		if(!is_in(Vis, Gram.P[i].izq)){
 			var nod = Gram.P[i].izq;
@@ -229,18 +245,46 @@ function procesar_grli_de_grld(form1, form2){
 function procesar_grld_de_afd(form1, form2){
 	var Aut=guardar_automata(form1);
 	if(!is_afd(Aut)){ alert("Automata Finito Deterministico NO valido"); return ;}
-	
+	procesar_dibujar(form1);
+	var noterminales = [];
+	for(var i=0; i<Aut.K.length; i++){
+		if(Aut.K[i]=="q1"){
+			noterminales.push("S");
+			continue;
+		}
+		var aux=siguiente_letra_M(noterminales);
+		noterminales.push(aux);
+	}
+	var producciones = [];
+	for(var i=0; i<Aut.T.length; i++){ // pushear las transiciones
+		var auxi="", j, auxd=Aut.T[i].eti;
+		for(j=0; j<Aut.K.length; j++) if(Aut.K[j]==Aut.T[i].ini) break;
+		auxi=noterminales[j];		
+		for(j=0; j<Aut.K.length; j++) if(Aut.K[j]==Aut.T[i].des) break;
+		auxd+=noterminales[j];
+		producciones.push({izq:auxi, der:auxd});
+	}
+	for(var i=0; i<Aut.T.length; i++) // pushear las transiciones noterminales
+		if(is_in(Aut.F, Aut.T[i].des)){
+			var j;
+			for(j=0; j<Aut.K.length; j++) if(Aut.K[j]==Aut.T[i].ini) break;
+			producciones.push({izq:noterminales[j], der:Aut.T[i].eti});
+		}
+	for(var i=0; i<producciones.length; i++){//////////////////////revisar esto
+		alert(producciones[i].izq+" -> "+producciones[i].der);
+	}
+	mostrar_gramatica({N:noterminales, T:Aut.S, P:producciones, S:"S"}, form2);
 	alert("Conversión lograda con exito");
 }
 
 /************************************************Para graficar********************/
 function mostrar_data(aut){
 	var data="";
-	data+="digraph { node[shape=filled fontSize=16]; edge[color=black, fontColor=black];"; //length=300,
+	data+="digraph { node[shape=circle fontSize=16]; edge[color=black, fontColor=black];"; //length=300,
 	for(var i=0; i<aut.T.length; i++)
 		data+=aut.T[i].ini+" -> "+aut.T[i].des+"[label=\""+aut.T[i].eti+"\"];";
 	for(var i=0; i<aut.F.length; i++)
-		data+=aut.F[i]+" [shape=circle];";
+		data+=aut.F[i]+" [shape=circle2 fontSize=16];";
 	data+="}"
 	document.getElementById("data").value=data;
 }

@@ -1,6 +1,13 @@
-function Procesar(){
-	var expo=document.getElementById("exp").value;
-	var mant=document.getElementById("man").value;
+function Limpiar_Elements(id, N, element){
+	var aux=document.getElementById(id).getElementsByTagName(element);
+	for(var i=aux.length-1; i>=N; i--){		
+		document.getElementById(id).removeChild(aux[i]);
+	}
+	
+}
+function ProcesarMaquina(){
+	var expo=parseInt(document.getElementById("exp").value);
+	var mant=parseInt(document.getElementById("man").value);
 	var ex=0;
 	expo--;
 	for(var i=0; i<expo; i++){
@@ -15,17 +22,50 @@ function Procesar(){
 	//alert(ma+" "+ex+"|"+Max+"|");
 	document.getElementById("Max").value=Max;
 	document.getElementById("Min").value=Min;
-}
-
-function Limpiar_P(form, N){
-	var aux=document.getElementById(form).getElementsByTagName('p');
-	for(var i=aux.length-1; i>=N; i--){		
-		document.getElementById(form).removeChild(aux[i]);
+	Limpiar_Elements('contenido', 1, 'table');
+	var tabla=document.createElement("table");
+	var at0=document.createAttribute("width"); at0.value="90%"; tabla.setAttributeNode(at0);
+	var at1=document.createAttribute("align"); at1.value="center"; tabla.setAttributeNode(at1);
+	var tr1=document.createElement("tr");
+	var td11=document.createElement("td"); td11.appendChild(document.createTextNode("signo"));
+	tr1.appendChild(td11);	
+	var td12=document.createElement("td"); td12.appendChild(document.createTextNode("exponente"));
+	var at12=document.createAttribute("colspan"); at12.value=expo+1; td12.setAttributeNode(at12);
+	tr1.appendChild(td12);	
+	var td13=document.createElement("td"); td13.appendChild(document.createTextNode("matisa"));
+	var at13=document.createAttribute("colspan"); at13.value=mant; td13.setAttributeNode(at13);
+	tr1.appendChild(td13);
+	var tr2=document.createElement("tr");
+	var td21=document.createElement("td"); td21.appendChild(document.createTextNode(" 0 "));
+	var at21=document.createAttribute("class"); at21.value="rojo"; td21.setAttributeNode(at21);
+	tr2.appendChild(td21);
+	var td22=document.createElement("td"); td22.appendChild(document.createTextNode(" 0 "));
+	var at22=document.createAttribute("class"); at22.value="rojo"; td22.setAttributeNode(at22);
+	tr2.appendChild(td22);
+	for(var i=0; i<expo; i++){
+		var tdaux=document.createElement("td");
+		tdaux.appendChild(document.createTextNode(" 1 "));
+		tr2.appendChild(tdaux);
 	}
-	
+	for(var i=0; i<mant; i++){
+		var tdaux=document.createElement("td");
+		tdaux.appendChild(document.createTextNode(" 1 "));
+		tr2.appendChild(tdaux);
+	}
+	var tr3=document.createElement("tr");
+	for(var i=1; i<mant+expo+3; i++){
+		var tdaux=document.createElement("td");
+		tdaux.appendChild(document.createTextNode(i));
+		tr3.appendChild(tdaux);
+	}
+	tabla.appendChild(tr1);
+	tabla.appendChild(tr2);
+	tabla.appendChild(tr3);
+	var con=document.getElementById("contenido");
+	con.appendChild(tabla);
 }
 function crear_tabla_funcion(form){
-	Limpiar_P(form, 2);
+	Limpiar_Elements(form, 2, 'p');
 	var grado=document.getElementById("grado").value;
 	var pp= document.createElement("p");
 	
@@ -57,7 +97,7 @@ function crear_tabla_funcion(form){
 }
 
 function Procesar(form){
-	Limpiar_P(form, 0);
+	Limpiar_Elements(form, 0, 'p');
 	var grado=document.getElementById("grado").value;
 	//Teorema fundamental del algera
 	var pp = document.createElement("p");
@@ -82,8 +122,5 @@ function Procesar(form){
 	pp.appendChild(x);
 	pp.appendChild(x);
 	document.getElementById(form).appendChild(pp);
-	//
-	
-	//alert("sal"+cnt+ cad);
 }
 

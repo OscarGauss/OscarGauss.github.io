@@ -168,7 +168,7 @@ function Secante(fun, X_1, X_2, eps){
 	return X_i;
 }
 
-function Procesar_Solucion(){
+function Procesar_Solucion_Ecuacion(){
 	// Metodo Grafico
 	Limpiar_Elements("SolGraf", 0, 'p');	
 	Limpiar_Elements("SolGraf", 0, 'h2');
@@ -212,6 +212,108 @@ function Procesar_Solucion(){
 	alert("Proceso Terminado");
 }
 
+function crear_matriz(form){
+	Limpiar_Elements(form, 2, 'p');
+	var tam=document.getElementById("tam").value;
+	for(var i=0; i<tam; i++){
+		var varp= document.createElement("p");			
+		for(var j=0; j<tam; j++){
+			var ip=document.createElement("input");		
+			ip.setAttributeNode(Atribute("type", "text"));
+			ip.setAttributeNode(Atribute("name", "Aij"+i));
+			ip.setAttributeNode(Atribute("size", "3"));
+			ip.setAttributeNode(Atribute("id", "Aij"+i+j));
+			varp.appendChild(ip);
+			varp.appendChild(document.createTextNode(" * x"+(j+1)+" "));
+		}
+		varp.appendChild(document.createTextNode(" = "))
+		document.getElementById(form).appendChild(varp);
+		var ip=document.createElement("input");		
+		ip.setAttributeNode(Atribute("type", "text"));
+		ip.setAttributeNode(Atribute("name", "Bi"));
+		ip.setAttributeNode(Atribute("size", "3"));
+		ip.setAttributeNode(Atribute("id", "Bi"+i));
+		varp.appendChild(ip);
+	}
+}
+
+function Mostrar_Matriz(form, Mat){
+	for(var i=0; i<Mat.length; i++){
+		var pp=document.createElement("p");
+		for(var j=0; j<Mat.length; j++){
+			var ip=document.createElement("input");		
+			ip.setAttributeNode(Atribute("type", "text"));
+			ip.setAttributeNode(Atribute("size", "5"));
+			ip.setAttributeNode(Atribute("value", Mat[i][j]));
+			pp.appendChild(ip);
+			pp.appendChild(document.createTextNode("  "));
+		}
+		document.getElementById(form).appendChild(pp);
+	}
+}
+function DescomponerLU(Mat){
+	var A=new Array();
+	for(var k=0; k<Mat.length-1; k++){
+		for(var i=k+1; i<Mat.length; i++){
+			var factor=Mat[i][k]/Mat[k][k];
+			Mat[i][k]=factor;
+			for(var j=k+1; j<Mat.length; j++){
+				Mat[i][j]=Mat[i][j]-factor*Mat[k][j];
+			}
+		}
+	}
+	return Mat;
+}
+
+function Substitucion(A, B){	
+	var n=A.length;
+	var X=new Array(n);
+	for(var i=1; i<n; i++){
+		var sum=B[i];
+		for(var j=0; j<=i-1; j++){
+			sum-=(A[i][j]*B[j]);
+		}
+		B[i]=sum;
+	}
+	X[n-1]=B[n-1]/A[n-1][n-1];
+	for(var i=n-2; i>=0; i--){
+		var sum=0.0;
+		for(var j=i+1; j<n; j++){
+			sum+=A[i][j]*X[j];
+		}
+		X[i]=(B[i]-sum)/A[i][i];
+	}
+	return X;
+}
+
+function Procesar_Solucion_Matriz(){
+	Limpiar_Elements("form2", 0, "p");
+	var tam=document.getElementById("tam").value;
+	var Aux=new Array(), Mat=new Array(tam), A=new Array(tam), L=new Array(tam), U=new Array(tam), X=new Array(tam), B=new Array();
+	for(var i=0; i<tam; i++){
+		Aux.push(document.getElementsByName("Aij"+i));
+		B.push(document.getElementById("Bi"+i).value);
+	}
+	for(var i=0; i<tam; i++){
+		Mat[i]=new Array(); A[i]=new Array(); U[i]=new Array(); L[i]=new Array();
+		for(var j=0; j<Aux[i].length; j++)
+			Mat[i].push(Aux[i][j].value);
+	}
+	A=DescomponerLU(Mat);
+	for(var i=0; i<tam; i++)
+		for(var j=0; j<A[i].length; j++)
+			if(j>=i) U[i].push(A[i][j]); else U[i].push(0);	
+	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Matriz U:"));	
+	Mostrar_Matriz("form2", U);
+	for(var i=0; i<tam; i++)
+		for(var j=0; j<A[i].length; j++)
+			if(j>i) L[i].push(0); else if(i==j) L[i].push(1); else L[i].push(A[i][j]);
+	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Matriz L:"));	
+	Mostrar_Matriz("form2", L);
+	X=Substitucion(A, B);
+	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Soluciones de la matriz:"));
+	for(var i=0; i<X.length; i++) document.getElementById("form2").appendChild(Insert_Text_Element("p", "x"+(i+1)+" = "+X[i]));
+}
 function Graficar(fun){
 	var Y1=parseInt(document.getElementById("Y1").value);
 	var Y2=parseInt(document.getElementById("Y2").value);
@@ -296,7 +398,7 @@ function Graficar(fun){
 
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Eval1_Y(form, x){
 	var signo=document.getElementsByName("signo");
 	var constante=document.getElementsByName("constante");

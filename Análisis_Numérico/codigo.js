@@ -311,7 +311,7 @@ function Procesar_Solucion_Matriz(){
 	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Matriz L:"));	
 	Mostrar_Matriz("form2", L);
 	X=Substitucion(A, B);
-	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Soluciones de la matriz:"));
+	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Soluciones del sistema:"));
 	for(var i=0; i<X.length; i++) document.getElementById("form2").appendChild(Insert_Text_Element("p", "x"+(i+1)+" = "+X[i]));
 }
 

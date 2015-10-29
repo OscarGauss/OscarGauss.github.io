@@ -109,21 +109,21 @@ function Insert_Text_Element(type, texto){
 }
 
 function Remplazar(exp){	
-	exp=exp.replace("E", "Math.E");
-	exp=exp.replace("PI", "Math.PI");
-	exp=exp.replace("abs", "Math.abs");
-	exp=exp.replace("acos", "Math.acos");
-	exp=exp.replace("asin", "Math.asin");
-	exp=exp.replace("atan", "Math.atan");
-	exp=exp.replace("cos", "Math.cos");
-	exp=exp.replace("sin", "Math.sin");
-	exp=exp.replace("tan", "Math.tan");
-	exp=exp.replace("ceil", "Math.ceil");
-	exp=exp.replace("floor", "Math.floor");
-	exp=exp.replace("log", "Math.log");
-	exp=exp.replace("exp", "Math.exp");
-	exp=exp.replace("pow", "Math.pow");
-	exp=exp.replace("sqrt", "Math.sqrt");
+	while(exp!=exp.replace("e", "Math.E"))exp=exp.replace("e", "Math.E");
+	while(exp!=exp.replace("pi", "Math.PI"))exp=exp.replace("pi", "Math.PI");
+	while(exp!=exp.replace("ABS", "Math.abs"))exp=exp.replace("ABS", "Math.abs");
+	while(exp!=exp.replace("ACOS", "Math.acos"))exp=exp.replace("ACOS", "Math.acos");
+	while(exp!=exp.replace("ASIN", "Math.asin"))exp=exp.replace("ASIN", "Math.asin");
+	while(exp!=exp.replace("ATAN", "Math.atan"))exp=exp.replace("ATAN", "Math.atan");
+	while(exp!=exp.replace("COS", "Math.cos"))exp=exp.replace("COS", "Math.cos");
+	while(exp!=exp.replace("SIN", "Math.sin"))exp=exp.replace("SIN", "Math.sin");
+	while(exp!=exp.replace("TAN", "Math.tan"))exp=exp.replace("TAN", "Math.tan");
+	while(exp!=exp.replace("CEIL", "Math.ceil"))exp=exp.replace("CEIL", "Math.ceil");
+	while(exp!=exp.replace("FLOOR", "Math.floor"))exp=exp.replace("FLOOR", "Math.floor");
+	while(exp!=exp.replace("LOG", "Math.log"))exp=exp.replace("LOG", "Math.log");
+	while(exp!=exp.replace("EXP", "Math.exp"))exp=exp.replace("EXP", "Math.exp");
+	while(exp!=exp.replace("POW", "Math.pow"))exp=exp.replace("POW", "Math.pow");
+	while(exp!=exp.replace("SQRT", "Math.sqrt"))exp=exp.replace("SQRT", "Math.sqrt");
 	return exp;
 }
 
@@ -314,6 +314,117 @@ function Procesar_Solucion_Matriz(){
 	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Soluciones de la matriz:"));
 	for(var i=0; i<X.length; i++) document.getElementById("form2").appendChild(Insert_Text_Element("p", "x"+(i+1)+" = "+X[i]));
 }
+
+function crear_matriz2(form){
+	Limpiar_Elements(form, 2, 'p');
+	var tam=document.getElementById("tam").value;
+	for(var i=0; i<tam; i++){
+		var varp= document.createElement("p");
+		var aux="f"+(i+1)+" (";
+		for(var j=0; j<tam; j++){
+			aux+="x"+(j+1);
+			if(j<tam-1) aux+=", ";
+		}
+		aux+=") = ";
+		varp.appendChild(document.createTextNode(aux));		
+		var ip=document.createElement("input");		
+		ip.setAttributeNode(Atribute("type", "text"));
+		ip.setAttributeNode(Atribute("name", "Ai"));
+		ip.setAttributeNode(Atribute("size", 10*tam));
+		ip.setAttributeNode(Atribute("id", "Ai"+i));		
+		varp.appendChild(ip);
+		document.getElementById(form).appendChild(varp);
+	}
+	document.getElementById(form).appendChild(Insert_Text_Element("p", "Matriz Jacobiana:"));
+	for(var i=0; i<tam; i++){
+		var varp= document.createElement("p");			
+		for(var j=0; j<tam; j++){
+			var ip=document.createElement("input");		
+			ip.setAttributeNode(Atribute("type", "text"));
+			ip.setAttributeNode(Atribute("name", "Aij"+i));
+			ip.setAttributeNode(Atribute("size", 5*tam));
+			ip.setAttributeNode(Atribute("id", "Aij"+i+j));
+			varp.appendChild(ip);
+			varp.appendChild(document.createTextNode("   "));
+		}
+		document.getElementById(form).appendChild(varp);
+	}
+	document.getElementById(form).appendChild(Insert_Text_Element("p", "Valores iniciales:"));
+	for(var i=0; i<tam; i++){
+		var varp=document.createElement("p");
+		var aux="x"+(i+1)+" = ";
+		varp.appendChild(document.createTextNode(aux));		
+		var ip=document.createElement("input");		
+		ip.setAttributeNode(Atribute("type", "text"));
+		ip.setAttributeNode(Atribute("name", "Xi"));
+		ip.setAttributeNode(Atribute("size", 5));
+		ip.setAttributeNode(Atribute("id", "Xi"+i));		
+		varp.appendChild(ip);
+		document.getElementById(form).appendChild(varp);
+	}	
+}
+
+function Procesar_Solucion_Sistema_No_Lineal(){
+	Limpiar_Elements("form2", 0, "p");
+	//LECTURA
+	var tam=document.getElementById("tam").value;
+	var Ecuaciones=new Array(tam), Aux=new Array(), Mat=new Array(tam), VecX=new Array(tam);
+	for(var i=0; i<tam; i++)
+		Ecuaciones[i]=Remplazar(document.getElementById("Ai"+i).value);
+	for(var i=0; i<tam; i++)
+		Aux.push(document.getElementsByName("Aij"+i));	
+	for(var i=0; i<tam; i++){
+		Mat[i]=new Array();
+		for(var j=0; j<Aux[i].length; j++)
+			Mat[i].push(Remplazar(Aux[i][j].value));
+	}
+	for(var i=0; i<tam; i++)
+		VecX[i]=document.getElementById("Xi"+i).value;
+	//METODO NEWTON
+	var eps=0.00001, difer=1.0;
+	var maxiter =50, iter=0;
+	while(difer>eps && iter<maxiter){
+		iter++;
+		//Evaluar la matriz Jacobiana con VecX
+		var MatJX=new Array(tam), A=new Array(tam);
+		for(var i=0; i<tam; i++){
+			MatJX[i]=new Array(tam); A[i]=new Array(tam);
+			for(var j=0; j<tam; j++){
+				MatJX[i][j]=Mat[i][j];
+				for(var k=0; k<tam; k++){
+					var x="x"+(k+1);
+					while(MatJX[i][j]!=(MatJX[i][j].replace(x, ""+VecX[k]+"")))MatJX[i][j]=(MatJX[i][j].replace(x, ""+VecX[k]+""));
+				}
+				MatJX[i][j]=(eval(MatJX[i][j]));
+			}
+		}
+		var B=new Array(tam);
+		for(var i=0; i<tam; i++){
+			B[i]=Ecuaciones[i];
+			for(var k=0; k<tam; k++){
+				var x="x"+(k+1);
+				while(B[i]!=(B[i].replace(x, ""+VecX[k]+"")))B[i]=(B[i].replace(x, ""+VecX[k]+""));
+			}
+			B[i]=eval(B[i]);
+		}
+		A=DescomponerLU(MatJX);
+		var ActX=Substitucion(A, B);
+		difer=0;
+		for(var i=0; i<tam; i++){
+			VecX[i]-=ActX[i];
+			difer+=Math.abs(ActX[i]);
+		}
+	}
+	document.getElementById("form2").appendChild(Insert_Text_Element("p", "Soluciones:"));
+	for(var i=0; i<tam; i++){
+		var varp=document.createElement("p");
+		var aux="x"+(i+1)+" = "+VecX[i];
+		varp.appendChild(document.createTextNode(aux));		
+		document.getElementById("form2").appendChild(varp);
+	}
+	if(iter==maxiter)alert("No se llego a una solucion :/");
+}
+
 function Graficar(fun){
 	var Y1=parseInt(document.getElementById("Y1").value);
 	var Y2=parseInt(document.getElementById("Y2").value);

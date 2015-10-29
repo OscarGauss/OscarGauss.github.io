@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Métodos de Solución de Matrices</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+  <body>
+	
+	<header>
+	  <h1>Métodos de Solución de Sistemas de Ecuaciones No Lineales</h1>
+	  <div id="boton" onclick="Procesar_Solucion_Sistema_No_Lineal()">generar</div>
+	</header>
+	<div id="contenido">	
+	  
+	  <table class='tablaprincipal' width='100%'>	
+		<tr>
+		  <td>
+		  <form name="funcion" id="form1">
+			<p>Ingrese el numero de ecuaciones</p>
+			<p><input type="text" id="tam" placeholder="2" maxlength="2" size="4"/>
+			<input type="button" value="CLIC" onclick="crear_matriz2('form1')">
+		  </form>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+		  <form name="Soluciones" id="form2">
+			<h1>Solucione del sistema</h1>
+		  </form>
+		  </td>
+		</tr>
+		</tr>
+		  <td>
+		  <p> Solo se aceptan estas funciones : 'ABS', 'ACOS', 'ASIN', 'ATAN', 'COS', 'SIN', 'TAN', 'CEIL', 'FLOOR', 'LOG', 'EXP', 'POW', 'SQRT' y tambien 'e' y 'pi'</p>
+		  </td>
+		</tr>
+	  </table>
+	  
+	</div>
+  </body>
+</html>

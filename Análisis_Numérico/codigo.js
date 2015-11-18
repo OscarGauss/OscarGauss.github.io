@@ -173,9 +173,19 @@ function Procesar_Solucion_Ecuacion(){
 	Limpiar_Elements("SolGraf", 0, 'p');	
 	Limpiar_Elements("SolGraf", 0, 'h2');
 	document.getElementById("SolGraf").appendChild(Insert_Text_Element("p", "Esta es la grafica"))
-	var func=document.getElementById("funcion").value;
-	func=Remplazar(func);
-	Graficar(func).render();
+	var funcs = new Array();
+	var func=Remplazar(document.getElementById("funcion").value);
+	funcs.push(func);
+	funcs.push("0");
+	var Y1=parseInt(document.getElementById("Y1").value);
+	var Y2=parseInt(document.getElementById("Y2").value);
+	var X1=parseFloat(document.getElementById("X1").value);
+	var X2=parseFloat(document.getElementById("X2").value);
+	var x1=new Array();
+	var x2=new Array();
+	x1.push(X1); x1.push(X1);
+	x2.push(X2); x2.push(X2);
+	Graficar(funcs, X1, X2, Y1, Y2, x1, x2).render();
 	var CajaAux=document.getElementsByTagName('span');
 	var Caja=CajaAux[CajaAux.length-1];
 	var elements = document.getElementsByTagName('span');
@@ -425,14 +435,99 @@ function Procesar_Solucion_Sistema_No_Lineal(){
 	if(iter==maxiter)alert("No se llego a una solucion :/");
 }
 
-function Graficar(fun){
+
+function Procesar_Solucion_Spline_Cubico(){
+	//Graficar
+	Limpiar_Elements("SolGraf", 0, 'p');	
+	Limpiar_Elements("SolGraf", 0, 'h2');
+	document.getElementById("SolGraf").appendChild(Insert_Text_Element("p", "Esta es la grafica"))
+	
+	var pnt=document.getElementById("puntos").value;
+	while(pnt!=pnt.replace("\t", " "))pnt=pnt.replace("\t", " ");
+	while(pnt!=pnt.replace("\n", " "))pnt=pnt.replace("\n", " ");
+	while(pnt!=pnt.replace("  ", " "))pnt=pnt.replace("  ", " ");
+	var arr=pnt.split(" ");
+	var X=new Array();
+	var A=new Array();
+	//Hallar A B C D
+	for(var i=0; i<arr.length; i+=2){
+		X.push(parseFloat(arr[i]));
+		A.push(parseFloat(arr[i+1]));
+	}
+	var n=X.length-1;
+	for(var i=0; i<=n; i++){
+		alert(i+":"+X[i]+" , "+ A[i]);
+	}	
+	var H=new Array(n+1);
+	for(var i=0; i<=n-1; i++){
+		H[i]=X[i+1]-X[i];
+	}
+	var Alpha=new Array(n+1);
+	for(var i=1; i<=n-1; i++){
+		Alpha[i]=(3/H[i])*(A[i+1]-A[i])-(3/H[i-1])*(A[i]-A[i-1]);
+	}
+	//resolver el sistema lineal tridiagonal
+	var L=new Array(n+1); L[0]=1;
+	var U=new Array(n+1); U[0]=0;
+	var Z=new Array(n+1); Z[0]=0;
+	for(var i=1; i<=n-1; i++){
+		L[i]=2*(X[i+1]-X[i-1])-H[i-1]*U[i-1];
+		U[i]=H[i]/L[i];
+		Z[i]=(Alpha[i]-H[i-1]*Z[i-1])/L[i];
+	}	
+	L[n]=1; Z[n]=0;
+	var B=new Array(n+1);
+	var C=new Array(n+1);
+	var D=new Array(n+1);
+	C[n]=0;
+	for(var i=n-1; i>=0; i--){
+		C[i]=Z[i]-U[i]*C[i+1];
+		B[i]=((A[i+1]-A[i])/H[i])-H[i]*(C[i+1]+2*C[i])/3;
+		D[i]=(C[i+1]-C[i])/(3*H[i]);
+	}
+	alert("asdfsdf");
+	////////////////	
+	var fff=new Array();
+	var x1=new Array();
+	var x2=new Array();	
+	for(var i=0; i<=n-1; i++){
+		var func=A[i];
+		func=func+(B[i]>=0?"+":"")+B[i]+"*(x"+(-X[i]>=0?"+":"")+(-X[i])+")";
+		func=func+(C[i]>=0?"+":"")+C[i]+"*POW(x"+(-X[i]>=0?"+":"")+(-X[i])+", 2)";
+		func=func+(D[i]>=0?"+":"")+D[i]+"*POW(x"+(-X[i]>=0?"+":"")+(-X[i])+", 3)";
+		fff.push(Remplazar(func));
+		x1.push(X[i]);
+		x2.push(X[i+1]);
+		alert(fff[i]);
+	}
+	alert("222");
 	var Y1=parseInt(document.getElementById("Y1").value);
 	var Y2=parseInt(document.getElementById("Y2").value);
 	var X1=parseFloat(document.getElementById("X1").value);
 	var X2=parseFloat(document.getElementById("X2").value);
-	var data = pv.range(X1, X2, .1).map(
+	Graficar(fff, X1, X2, Y1, Y2, x1, x2).render();// esto ya garfica varias funciones :)
+	var CajaAux=document.getElementsByTagName('span');
+	var Caja=CajaAux[CajaAux.length-1];
+	var elements = document.getElementsByTagName('span');
+	while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
+	document.getElementById("SolGraf").appendChild(Caja);
+	alert("TERMINO");
+}
+
+
+function cargar_imagen(){
+	alert("entro");
+	var x = document.getElementById("imagenfile");
+	alert(x.value);
+	var y = document.getElementById("imagen");
+	y.setAttributeNode(Atribute("src", x.value));		
+	alert(y);
+}
+
+function Graficar(funciones, X1, X2, Y1, Y2, x1, x2){ //funciones, x1, x2 son vectores
+	var data = pv.range(x1[0], x2[0], .1).map(
 		function(x) {
-			return {x: x, y: eval(fun)};
+			return {x: x, y: eval(funciones[0])};
 		}
 	),
 		w = 500,
@@ -465,33 +560,25 @@ function Graficar(fun){
 		.strokeStyle("#eee")
 		.anchor("bottom").add(pv.Label)
 		.text(function(d) d.toFixed());
-	
-	vis.add(pv.Line)
-		.data(data)
-		.left(function(d) x(d.x))
-		.bottom(function(d) y(d.y))
-		.lineWidth(3)
-		.text(function(d) d.x.toFixed(2) + ', ' + d.y.toFixed(2))
-		.event("point", pv.Behavior.tipsy({gravity: 's'}));
-
-	// La linea que corta en y=0;////////////////////////////////////////
-	data = pv.range(X1, X2, .1).map(
-		function(x) {
-			return {x: x, y: 0};
-		}
-	),
+	for(var i=0; i<funciones.length; i++){
+		data = pv.range(x1[i], x2[i], .01).map( //.01 es la definicion de la linea o division en puntos
+			function(x) {
+				return {x: x, y: eval(funciones[i])};
+			}
+		),
 		w = 500,
 		h = 500,
 		x = pv.Scale.linear(X1, X2).range(0, w),
 	    y = pv.Scale.linear(Y1, Y2).range(0, h);
-	
-	vis.add(pv.Line)
-		.data(data)
-		.left(function(d) x(d.x))
-		.bottom(function(d) y(d.y))
-		.lineWidth(1)
-		.text(function(d) d.x.toFixed(2) + ', ' + d.y.toFixed(2))
-		.event("point", pv.Behavior.tipsy({gravity: 's'}));
+		
+		vis.add(pv.Line)
+			.data(data)
+			.left(function(d) x(d.x))
+			.bottom(function(d) y(d.y))
+			.lineWidth(1)
+			.text(function(d) d.x.toFixed(2) + ', ' + d.y.toFixed(2))
+			.event("point", pv.Behavior.tipsy({gravity: 's'}));
+	}	
 	///////////////////////////////////////////////////////////////////
 	vis.render();
 	return vis;

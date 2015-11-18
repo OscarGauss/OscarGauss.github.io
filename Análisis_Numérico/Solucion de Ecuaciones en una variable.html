@@ -27,7 +27,7 @@
 		  <td colspan="2">
 		  <form name="funcion" id="form1">
 			<p>Ingrese la funcion</p>
-			<p>f(x)=<input type="text" id="funcion" placeholder="-9*pow(x, 2)+sin(x)+cos(x)" maxlength="100" size="30"/> =0
+			<p>f(x)=<input type="text" id="funcion" placeholder="-9*POW(x, 2)+SIN(x)+COS(x)" maxlength="100" size="30"/> =0
 			</p>
 		  </form>
 		  </td>
@@ -45,8 +45,8 @@
 		  </td>
 		</tr>	
 		  <td>
-		    <p><input id="X1" type="text" size="4" placeholder="100"><=x<=<input id="X2" type="text" size="4" placeholder="100"></p>
-		    <p><input id="Y1" type="text" size="4" placeholder="100"><=y<=<input id="Y2" type="text" size="4" placeholder="100"></p>
+		    <p><input id="X1" type="text" size="4" placeholder="-100"><=x<=<input id="X2" type="text" size="4" placeholder="100"></p>
+		    <p><input id="Y1" type="text" size="4" placeholder="-100"><=y<=<input id="Y2" type="text" size="4" placeholder="100"></p>
 		  </td>
 		  <td id="SolGraf">
 		  </td>
@@ -71,7 +71,7 @@
 		</tr>	
 		  <td>
 		    <p>derivada de la funcion</p>
-		    <p><input type="text" id="funciondx" placeholder="-9*pow(x, 2)+sin(x)+cos(x)" maxlength="100" size="30"/></p>
+		    <p><input type="text" id="funciondx" placeholder="-9*POW(x, 2)+SIN(x)+COS(x)" maxlength="100" size="30"/></p>
 		    <p>Valor Inicial</p>
  		    <p>X_0 = <input id="X_0" type="text" size="5" placeholder="1"></p>
 		    <p>Tolerancia <input id="EPSn" type="text" size="10" placeholder="0.000001"></p>
@@ -91,6 +91,11 @@
 		    <p>Tolerancia <input id="EPSs" type="text" size="10" placeholder="0.000001"></p>
 		  </td>
 		  <td id="SolSec">
+		  </td>
+		</tr>
+		</tr>
+		  <td colspan="2">
+		  <p> Solo se aceptan estas funciones : 'ABS', 'ACOS', 'ASIN', 'ATAN', 'COS', 'SIN', 'TAN', 'CEIL', 'FLOOR', 'LOG', 'EXP', 'POW', 'SQRT' y tambien 'e' y 'pi'</p>
 		  </td>
 		</tr>
 	  </table>

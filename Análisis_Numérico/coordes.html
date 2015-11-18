@@ -1,0 +1,87 @@
+<html>
+
+<!-- Copiar dentro del tag HEAD -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+<script src="codigo.js"></script>
+<script language="JavaScript">
+
+var ns4 = (document.layers)? true:false
+var ie4 = (document.all)? true:false
+var ns6 = (document.getElementById && !document.all) ? true: false;
+var coorX, coorY, iniX, iniY;
+
+if (ns6) document.addEventListener("mousemove", mouseMove, true)
+if (ns4) {document.captureEvents(Event.MOUSEMOVE); document.mousemove = mouseMove;}
+
+function mouseMove(e)
+{
+	if (ns4||ns6)	{coorX = e.pageX; coorY = e.pageY;}
+	if (ie4)	{coorX = event.x; coorY = event.y;}
+	return true;
+}
+
+function ini()	{
+if (ie4)	document.body.onmousemove = mouseMove;
+iniX = document.getElementById("recuadro").offsetLeft;
+iniY = document.getElementById("recuadro").offsetHeight+document.getElementById("recuadro").offsetTop;
+}
+
+function coordenadas()	{
+//alert ("Pinchó las siguientes coordenadas:\nx:" + coorX + "\ny: " + coorY + "\niniX = " + iniX + "\niniY = " + iniY);
+//alert("Y:"+(iniY-coorY)+"X:"+(coorX-iniX));
+document.getElementById("puntos").value=document.getElementById("puntos").value+(coorX-iniX)+"\t"+(iniY-coorY)+"\n";
+}
+
+function mostrar()	{
+	document.getElementById("ayuda").style.top = coorY + 10;
+	document.getElementById("ayuda").style.left = coorX + 10;
+	document.getElementById("ayuda").style.visibility = "visible";
+	document.getElementById("ayuda").innerHTML = "x = " + coorX +"<br>y = " + coorY;
+}
+
+function ocultar()	{
+	document.getElementById("ayuda").style.visibility = "hidden";
+}
+function mover()	{
+	document.getElementById("ayuda").style.top = coorY + 10;
+	document.getElementById("ayuda").style.left = coorX + 10;
+	document.getElementById("ayuda").style.visibility = "visible";
+	document.getElementById("ayuda").innerHTML = "x = " + coorX +"<br>y = " + coorY;
+}
+
+</script>
+</head>
+
+<body onload="ini()" >
+<div align=center>
+<h3>
+... Mueve el raton por la imagen y mira el recuadro ...
+</h3>
+<p>
+<input id="imagenfile" type="file" size="40"></input>
+<input type="button" onclick="cargar_imagen()" value="CARGAR"></input>
+</p>
+
+<img src=au1.png onclick="coordenadas()" onmouseover="mostrar()" onmousemove="mover()" 
+onmouseout="ocultar()" id="recuadro"
+
+>
+<p>
+<textarea id="puntos" rows=10" cols="50"></textarea>
+</p>		
+</div>
+<div id="ayuda" style=" visibility:hidden;
+position:absolute;
+background:yellow;
+font:normal 10px/10px verdana;
+color:black;
+border:solid 1px black;
+text-align:justify;
+padding:10px 10px 10px 10px;">
+</div>
+
+
+</body>
+</html>
+

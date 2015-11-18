@@ -455,9 +455,7 @@ function Procesar_Solucion_Spline_Cubico(){
 		A.push(parseFloat(arr[i+1]));
 	}
 	var n=X.length-1;
-	for(var i=0; i<=n; i++){
-		alert(i+":"+X[i]+" , "+ A[i]);
-	}	
+	//for(var i=0; i<=n; i++) alert(i+":"+X[i]+" , "+ A[i]);
 	var H=new Array(n+1);
 	for(var i=0; i<=n-1; i++){
 		H[i]=X[i+1]-X[i];
@@ -485,7 +483,6 @@ function Procesar_Solucion_Spline_Cubico(){
 		B[i]=((A[i+1]-A[i])/H[i])-H[i]*(C[i+1]+2*C[i])/3;
 		D[i]=(C[i+1]-C[i])/(3*H[i]);
 	}
-	alert("asdfsdf");
 	////////////////	
 	var fff=new Array();
 	var x1=new Array();
@@ -498,9 +495,23 @@ function Procesar_Solucion_Spline_Cubico(){
 		fff.push(Remplazar(func));
 		x1.push(X[i]);
 		x2.push(X[i+1]);
-		alert(fff[i]);
+		//alert(fff[i]);
 	}
-	alert("222");
+	Limpiar_Elements("form2", 0, 'p');
+	var Mat=new Array(4);
+	Mat[0]=A; Mat[1]=B; Mat[2]=C; Mat[3]=D;
+	for(var i=0; i<n; i++){
+		var pp=document.createElement("p");
+		for(var j=0; j<4; j++){
+			var ip=document.createElement("input");		
+			ip.setAttributeNode(Atribute("type", "text"));
+			ip.setAttributeNode(Atribute("size", "5"));
+			ip.setAttributeNode(Atribute("value", Mat[j][i]));
+			pp.appendChild(ip);
+			pp.appendChild(document.createTextNode("  "));
+		}
+		document.getElementById("form2").appendChild(pp);
+	}
 	var Y1=parseInt(document.getElementById("Y1").value);
 	var Y2=parseInt(document.getElementById("Y2").value);
 	var X1=parseFloat(document.getElementById("X1").value);
@@ -511,17 +522,16 @@ function Procesar_Solucion_Spline_Cubico(){
 	var elements = document.getElementsByTagName('span');
 	while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
 	document.getElementById("SolGraf").appendChild(Caja);
-	alert("TERMINO");
+	alert("Grafica Terminada");
 }
 
 
 function cargar_imagen(){
-	alert("entro");
 	var x = document.getElementById("imagenfile");
-	alert(x.value);
-	var y = document.getElementById("imagen");
-	y.setAttributeNode(Atribute("src", x.value));		
-	alert(y);
+	var y = document.getElementById("recuadro");
+	y.setAttributeNode(Atribute("src", x.value));
+	iniX = document.getElementById("recuadro").offsetLeft;
+	iniY = document.getElementById("recuadro").offsetHeight+document.getElementById("recuadro").offsetTop;
 }
 
 function Graficar(funciones, X1, X2, Y1, Y2, x1, x2){ //funciones, x1, x2 son vectores

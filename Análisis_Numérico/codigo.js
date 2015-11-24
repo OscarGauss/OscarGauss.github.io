@@ -520,8 +520,118 @@ function Procesar_Solucion_Spline_Cubico(){
 	document.getElementById("SolGraf").appendChild(Caja);
 	alert("Grafica Terminada");
 }
+function RemE(cad, a, b){	
+	while(cad!=cad.replace(a,b))cad=cad.replace(a, b);
+	return cad;
+}
+function Procesar_Solucion_EDOs(){
+	Limpiar_Elements("SoluX", 0, 'p');
+	Limpiar_Elements("SoluYe", 0, 'p');
+	Limpiar_Elements("SoluYrk", 0, 'p');
+	var func=Remplazar(document.getElementById("funcion").value);
+	var a0=parseFloat(document.getElementById("a0").value);
+	var a1=parseFloat(document.getElementById("a1").value);
+	var b0=parseFloat(document.getElementById("b0").value);
+	var h=parseFloat(document.getElementById("h").value);
+	var X0 = new Array();
+	var Y_E = new Array(); // Y0
+	var F_eval0 = new Array(); //K1
+	X0.push(a0);
+	Y_E.push(b0);	
+	var feval=func;	
+	feval=RemE(feval, "x", X0[0]);
+	feval=RemE(feval, "y", Y_E[0]);
+	F_eval0.push(eval(feval));
+	for(var ai=a0+h, i=1; ai<=a1; ai+=h, i++){
+		X0.push(ai);
+		Y_E.push(Y_E[i-1]+h*F_eval0[i-1]);		
+		var feval=func;	
+		feval=RemE(feval, "x", X0[i]);
+		feval=RemE(feval, "y", Y_E[i]);
+		F_eval0.push(eval(feval));
+	}
+	var X1=new Array(); X1=X0;
+	var Y1=new Array(); Y1=Y_E;
+	var K1=new Array(); K1=F_eval0;
+	var X2=new Array();
+	var Y2=new Array();
+	var K2=new Array();
+	var X3=new Array();
+	var Y3=new Array();
+	var K3=new Array();
+	var X4=new Array();
+	var Y4=new Array();
+	var K4=new Array();
+	var RK=new Array();
+	for(var ai=a0, i=0; ai<=a1; ai+=h, i++){
+		//X1 Y1 y K1 ya estan procesados
+		X2.push(X1[i]+(1/2)*h);
+		Y2.push(Y1[i]+(1/2)*h*K1[i]);
+		var feval=func;	feval=RemE(feval, "x", X2[i]); feval=RemE(feval, "y", Y2[i]);
+		K2.push(eval(feval));//////		
+		X3.push(X1[i]+(1/2)*h);
+		Y3.push(Y1[i]+(1/2)*h*K2[i]);
+		feval=func;	feval=RemE(feval, "x", X3[i]); feval=RemE(feval, "y", Y3[i]);
+		K3.push(eval(feval));//////		
+		X4.push(X1[i]+h);
+		Y4.push(Y1[i]+h*K3[i]);
+		feval=func;	feval=RemE(feval, "x", X4[i]); feval=RemE(feval, "y", Y4[i]);
+		K4.push(eval(feval));
+		if(i==0) RK.push(Y1[0]);
+		else RK.push(RK[i-1]+(1/6)*(K1[i-1]+2*K2[i-1]+2*K3[i-1]+K4[i-1])*h);
+		//alert(RK[i]);
+	}
+	var pp1=document.createElement("p");
+	pp1.appendChild(document.createTextNode("X0"));
+	document.getElementById("SoluX").appendChild(pp1);	
+	var pp2=document.createElement("p");
+	pp2.appendChild(document.createTextNode("Y Euler"));
+	document.getElementById("SoluYe").appendChild(pp2);	
+	var pp3=document.createElement("p");
+	pp3.appendChild(document.createTextNode("Y Runge-Kutta"));
+	document.getElementById("SoluYrk").appendChild(pp3);
+	for(var i=0; i<Y_E.length; i++){		
+		var pp1=document.createElement("p");
+		pp1.appendChild(document.createTextNode(X1[i]));
+		document.getElementById("SoluX").appendChild(pp1);	
+		var pp2=document.createElement("p");
+		pp2.appendChild(document.createTextNode(Y_E[i]));
+		document.getElementById("SoluYe").appendChild(pp2);	
+		var pp3=document.createElement("p");
+		pp3.appendChild(document.createTextNode(RK[i]));
+		document.getElementById("SoluYrk").appendChild(pp3);
+	}
+	alert("Termino el proceso");
+}
 
-
+function Procesar_Integrar(){
+	Limpiar_Elements("Solu", 0, 'p');
+	var func=Remplazar(document.getElementById("funcion").value);
+	var A=parseFloat(document.getElementById("A").value);
+	var B=parseFloat(document.getElementById("B").value);	
+	var h=parseFloat(document.getElementById("h").value);
+	var Y = new Array();
+	for(var i=A; i<=B; i+=h){
+		var feval=func;	feval=RemE(feval, "x", i);
+		Y.push(eval(feval));
+	}
+	var n=Y.length, sum=0, par=0, imp=0;
+	for(var i=1; i<n-1; i++){
+		sum+=Y[i];
+		if(i%2==0) par+=Y[i];
+		else imp+=Y[i];
+	}
+	var trap=(h/2)*(Y[0]+Y[n-1]+2*sum);
+	var simp=(h/3)*(Y[0]+Y[n-1]+4*imp+2*par);
+	
+	var pp1=document.createElement("p");
+	pp1.appendChild(document.createTextNode("Por el metodo del trapecio: "+ trap));
+	document.getElementById("Solu").appendChild(pp1);	
+	var pp2=document.createElement("p");
+	pp2.appendChild(document.createTextNode("Por Simpson: "+ simp));
+	document.getElementById("Solu").appendChild(pp2);
+	alert("Proceso fin");
+}
 function cargar_imagen(){
 	var x = document.getElementById("imagenfile");
 	var y = document.getElementById("recuadro");

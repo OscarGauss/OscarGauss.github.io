@@ -501,16 +501,12 @@ function Procesar_Solucion_Spline_Cubico(){
 	var Mat=new Array(4);
 	Mat[0]=A; Mat[1]=B; Mat[2]=C; Mat[3]=D;
 	for(var i=0; i<n; i++){
-		var pp=document.createElement("p");
-		for(var j=0; j<4; j++){
-			var ip=document.createElement("input");		
-			ip.setAttributeNode(Atribute("type", "text"));
-			ip.setAttributeNode(Atribute("size", "5"));
-			ip.setAttributeNode(Atribute("value", Mat[j][i]));
-			pp.appendChild(ip);
-			pp.appendChild(document.createTextNode("  "));
-		}
-		document.getElementById("form2").appendChild(pp);
+		var pp1=document.createElement("p");		
+		pp1.appendChild(document.createTextNode("a_"+i+" + b_"+i+" ( x - x_"+i+" )"+" + c_"+i+" ( x - x_"+i+" ) ^ 2 + d_"+i+" ( x - x_"+i+" ) ^ 3"+"    para "+"x_"+i+" <= x <= x_"+(i+1)));//+"+"+M[0][i]+"+"+M[1][i]+"( x-x_"+(i+1)+")"));
+		var pp2=document.createElement("p");
+		pp2.appendChild(document.createTextNode(Math.round(Mat[0][i]*1000)/1000+" + "+Math.round(Mat[1][i]*1000)/1000+" ( x - "+X[i]+" )"+" + "+Math.round(Mat[2][i]*1000)/1000+" ( x - "+X[i]+" ) ^ 2 + "+Math.round(Mat[3][i]*1000)/1000+" ( x - "+X[i]+" ) ^ 3"+"    para "+X[i]+" <= x <= "+X[i+1]));//+"+"+M[0][i]+"+"+M[1][i]+"( x-x_"+(i+1)+")"));
+		document.getElementById("form2").appendChild(pp1);		
+		document.getElementById("form2").appendChild(pp2);
 	}
 	var Y1=parseInt(document.getElementById("Y1").value);
 	var Y2=parseInt(document.getElementById("Y2").value);

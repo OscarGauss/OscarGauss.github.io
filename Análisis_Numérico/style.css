@@ -19,3 +19,8 @@ table tr { background-color: #5882FA; color: #FFFFFF; text-align: center; }
 .rojo { background-color: #FF0000; color: #FFFFFF; text-align: center; }
 
 article { background: #5B92E4; }
+
+.superindice
+{vertical-align:super}
+.subindice
+{vertical-align:sub} 

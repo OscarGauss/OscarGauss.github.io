@@ -9,36 +9,28 @@
 	
 	<header>
 	  <h1>Código Unívocamente Decodificable</h1>
-	  <div id="boton" onclick="Procesar_Solucion_Spline_Cubico()">generar</div>
+	  <div id="boton" onclick="Procesar_Codigo_UD()">generar</div>
 	</header>
-	<div id="contenido">
-	  
+	<div id="contenido">	  
 	  <table class='tablaprincipal' width='100%'>
 		<tr>
 		  <td colspan="2">
-		  <form name="fpuntos" id="form1">
-			<p>Ingrese los puntos</p>
-			<textarea id="puntos" rows=10" cols="50">0.3	0.7408182207</textarea>
-		  </form>
+			<form name="CodeWords" id="form1">
+			  <p>Ingrese las palabras código del Código C</p>
+			  <textarea id="puntos" rows="10" cols="50">000 111 01010</textarea>
+			</form>
 		  </td>	
 		</tr>
 		<tr>
 		  <td colspan="2">
-		    <h1>Grafica de los splines</h1>
-		  </td>
-		</tr>	
-		  <td>
-		    <p><input id="X1" type="text" size="4" placeholder="100"><=x<=<input id="X2" type="text" size="4" placeholder="100"></p>
-		    <p><input id="Y1" type="text" size="4" placeholder="100"><=y<=<input id="Y2" type="text" size="4" placeholder="100"></p>
-		  </td>
-		  <td id="SolGraf">
+		    <h1>Resultados</h1>
 		  </td>
 		</tr>
-		</tr>	
+		<tr>
 		  <td colspan="2">
 		    <form name="Soluciones" id="form2">
-			<h1>Splines</h1>
-		  </form>
+			  <h1>El Código C es:</h1>
+			</form>
 		  </td>
 		</tr>
 	  </table>

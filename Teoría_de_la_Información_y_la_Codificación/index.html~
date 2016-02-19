@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Análisis Numérico</title>
+	<script src="codigo.js">
+	</script>
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+	<header>
+		<h1> Análisis Numérico </h1>
+	</header>
+	<div id="contenido">
+		<article>
+			<header>
+				<h1>Representación de Números</h1>
+			</header>
+			<ul>
+			  <li><a href="Maquina Hipotetica.html"> Dada una máquina hipotetica cual serian los números maximos y minimos almacenables.</a></li>
+			  </ul>
+		</article>
+		<article>
+			<header>
+				<h1>Solción de ecuaciones</h1>
+			</header>
+			<ul>
+			  <li><a href="Solucion de Ecuaciones en una variable.html"> Solucion de Ecuaciones en una variable</a></li>
+			  <li><a href="Solucion de sistemas de ecuaciones lineales.html"> Solución de un sistema de ecuaciones lineales por descomposición LU.</a></li> 
+			  <li><a href="Solucion de sistemas de ecuaciones no lineales.html"> Solución de un sistema de ecuaciones no lineales por método de Newton.</a></li>
+			  </ul>
+		</article>
+		<article>
+			<header>
+				<h1>Integracion</h1>
+			</header>
+			<ul>
+			  <li><a href="Integracion.html"> Integracion</a></li>
+			  
+			  </ul>
+		</article>
+		<article>
+			<header>
+				<h1>EDOS</h1>
+			</header>
+			<ul>
+			  <li><a href="Solucion de EDOs.html"> Solucion de EDOs</a></li>
+			  </ul>
+		</article>
+		<article>
+			<header>
+				<h1>Interpolación</h1>
+			</header>
+			<ul>
+			  <li><a href="Interpolacion Spline Cubico.html"> Interpolacion Spline Cubico.</a></li>
+			</ul>
+		</article>
+	</div>
+	
+</body>
+
+

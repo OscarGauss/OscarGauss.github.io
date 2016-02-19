@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Interpolación Spline Cubico</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+    
+    <script type="text/javascript" src="graf/protovis.js"></script>
+    <script src="graf/jquery-1.4.2.min.js" type="text/javascript"></script>
+    
+    <script src="graf/jquery.tipsy.js" type="text/javascript"></script>
+    <script src="graf/tipsy.js" type="text/javascript"></script>
+    <link href="graf/tipsy.css" type="text/css" rel="stylesheet"/>
+    
+  </head>
+  <body onload="ini()">
+	
+	<header>
+	  <h1>Interpolación Spline Cubico</h1>
+	  <div id="boton" onclick="Procesar_Solucion_Spline_Cubico()">generar</div>
+	</header>
+	<div id="contenido">
+	  
+	  <table class='tablaprincipal' width='100%'>
+		<tr>
+		  <td colspan="2">
+		  <form name="fpuntos" id="form1">
+			<p>Ingrese los puntos</p>
+			<textarea id="puntos" rows=10" cols="50">0.3	0.7408182207</textarea>
+		  </form>
+		  </td>	
+		</tr>
+		<tr>
+		  <td colspan="2">
+		    <h1>Grafica de los splines</h1>
+		  </td>
+		</tr>	
+		  <td>
+		    <p><input id="X1" type="text" size="4" placeholder="100"><=x<=<input id="X2" type="text" size="4" placeholder="100"></p>
+		    <p><input id="Y1" type="text" size="4" placeholder="100"><=y<=<input id="Y2" type="text" size="4" placeholder="100"></p>
+		  </td>
+		  <td id="SolGraf">
+		  </td>
+		</tr>
+		</tr>	
+		  <td colspan="2">
+		    <form name="Soluciones" id="form2">
+			<h1>Splines</h1>
+		  </form>
+		  </td>
+		</tr>
+	  </table>
+	</div>
+	<div id="ayuda" style=" visibility:hidden;
+	    position:absolute;
+	    background:yellow;
+	    font:normal 10px/10px verdana;
+	    color:black;
+	    border:solid 1px black;
+	    text-align:justify;
+	    padding:10px 10px 10px 10px;">
+	 </div>
+  </body>
+</html>

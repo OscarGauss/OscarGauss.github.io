@@ -1,0 +1,26 @@
+body { background: #E8F1FF; color: #FFFFFF; }
+
+header {
+	width: 100%;
+	text-align: center;
+	background: #3A6FC4;
+	font-size: 200%;
+	color: #A7C9FF;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+}
+
+#boton {	background: #5882FA; }
+
+#boton:hover{ background: #A7C9FF; color: #5882FA; }
+
+table th { background-color: #5882FA; color: #FFFFFF; text-align: center; }
+table tr { background-color: #5882FA; color: #FFFFFF; text-align: center; }
+.rojo { background-color: #FF0000; color: #FFFFFF; text-align: center; }
+
+article { background: #5B92E4; }
+
+.superindice
+{vertical-align:super}
+.subindice
+{vertical-align:sub} 

@@ -1,0 +1,75 @@
+ 
+function EsExpReg(expreg){
+	var c=0;
+	for(var i=0; i<expreg.length; i++){
+		if((expreg[i].exp.length==1) || (expreg[i].exp.length==2 && expreg[i].exp.charAt(1)=='*') || ( expreg[i].exp.length==3 && (expreg[i].exp.charAt(1)=='+' || expreg[i].exp.charAt(1)=='.') ) ){
+			c++;
+		}
+	}
+	if(c==expreg.length)
+		return true;
+	return false;
+}
+
+function Convertir(cad){
+	var LetrasMin = ["z","y","x","w","v","u","t","s","r","q","p","o","n","m","l","k","j","i","h","g","f","e","d","c","b","a"];
+	var Alfabeto = [];
+	for(var i=0; i<cad.length; i++){
+		if(cad.charAt(i)>='a' && cad.charAt(i)<='z'){
+			var auxx=0;
+			for(var j=0; j<Alfabeto.length; j++){
+				if(cad.charAt(i)==Alfabeto[j])
+					auxx++;
+			}
+			if(auxx==0){
+				Alfabeto.unshift(cad.charAt(i));
+			}
+		}
+	}
+	for(var i=0; i<Alfabeto.length; i++){
+		alert(Alfabeto[i]);
+	}
+	var ini = siguiente_letra(LetrasMin, Alfabeto);
+	alert(ini);
+	var expregulares = [{nom:ini, exp:cad}];
+	alert("ini");
+	var lol=0;
+	//alert("es "+EsExpReg(expregulares));
+	while(!EsExpReg(expregulares)){
+		alert(lol);
+		var bus="";
+		for(var i=0; i<expregulares.length; i++){
+			for(var j=0; j<expregulares[i].exp.length; j++){
+				if(expregulares[i].exp.charAt(j)=='('){
+					var c = 0;
+					var cad="";
+					for(var k=j+1; k<expregulares[i].exp.length; k++){
+						if(expregulares[i].exp.charAt(k)==')' && c==0) break;
+						if(expregulares[i].exp.charAt(k)=='(') c++;
+						if(expregulares[i].exp.charAt(k)==')') c--;
+						cad+=expregulares[i].exp.charAt(k);
+					}
+					var nomaux= SiguienteLetra();
+					expregulares[i].exp.replace("("+cad+")", nomaux);
+					expregulares.unshift({nom:nomaux, exp: cad});
+					break;
+				}
+
+			}	
+		}
+		lol++;if(lol==3)break;
+	}
+	//unshift
+	return expregulares;
+}
+
+function GuardarExp(){
+	alert("asfas");
+	var r1 = document.getElementById("expreg1").value;
+	var r2 = document.getElementById("expreg2").value;
+	var R1 = Convertir(r1);
+	alert("len de R1 "+R1.length);
+	for(var i=0; i< R1.length; i++){
+		alert(R1[i].nom+":"+R1[i].exp);
+	}
+}

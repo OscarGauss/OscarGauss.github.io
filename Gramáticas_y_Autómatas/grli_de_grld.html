@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>GRLD raiz no este en la parte derecha</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Construcción de una GRLI a partir de una GRLD</h1>
+      <div id="boton" onclick="procesar_grli_de_grld('form1', 'form2')">generar</div>
+    </header>
+    <div id="contenido">
+	  <table class='tablaprincipal' width='100%'>
+        <tr>
+		  <th width='50%'>
+            <h2>GRAMÁTICA REGULAR LINEAL DERECHA</h2>
+            <h3>ORIGINAL</h3>
+		  </th>
+		  <th width='50%'>
+            <h3>GRLI a partir de la original</h3>
+            <h3>RESULTADO</h3>
+		  </th>
+        </tr>
+        <tr>
+		  <td>
+			<form name="gramatica" id="form1">
+			  <p>Alfabeto de No Terminales</p>
+			  <p><input type="text" name="nt" id="form1nt" placeholder="S A" /></p>
+			  <p>Alfabeto de Terminales</p>
+			  <p><input type="text" name="t" id="form1t"  placeholder="a" /></p>
+			  <p>Símbolo raíz</p>
+			  <p>S</p>
+			  <p>Producciones 
+                <input type="text" name="np" id="form1np" placeholder="2" maxlength="2" size="4" />
+                <input type="button" value="CLIC" onclick="crear_tabla_gram('form1')"/>
+			  </p>
+            </form>
+		  </td>
+		  <td>
+            <form name="gramatica" id="form2">
+			  <p>Alfabeto de No Terminales</p>
+			  <p><input type="text" name="nt" id="form2nt" /></p>
+			  <p>Alfabeto de Terminales</p>
+			  <p><input type="text" name="t" id="form2t" /></p>
+			  <p>Símbolo raíz</p>
+			  <p>S</p>
+			  <p>Producciones<input type="text" name="np" id="form2np" maxlength="2" size="4" />
+			  </p>
+            </form>
+		  </td>
+		<tr>
+		  <td>
+			<div id="boton" onclick="limpiar_gram('form1')">Limpiar</div>
+		  </td>
+		  <td>
+			<div id="boton" onclick="limpiar_gram('form2')">Limpiar</div>
+		  </td>
+		</tr>
+        </tr>
+	  </table>
+    </div>
+  </body>
+</html>

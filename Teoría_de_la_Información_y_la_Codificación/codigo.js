@@ -72,7 +72,7 @@ function CadenaAmbigua(C){
 		for(var j=0; j<Suf.length; j++)
 			if(Cadenas.indexOf(Suf[j])==-1) Cadenas.push(Suf[j]);
 	}
-	//alert(Cadenas);
+	
 	var G=new Array(), P=new Array(), Vis=new Array();
 	for(var i=0; i<Cadenas.length; i++){
 		G[i]=new Array();
@@ -86,6 +86,7 @@ function CadenaAmbigua(C){
 			if(Edge2(i, j, Cadenas, N)) G[i].push({to:j, type:2});
 		}//Terminno de Armar
 	/*
+	alert(Cadenas);
 	for(var i=0; i<G.length; i++){
 		alert(i+":::");
 		for(var j=0; j<G[i].length; j++)
@@ -131,6 +132,7 @@ function CadenaAmbigua(C){
 			cc=Cadenas[u].substr(0, Cadenas[u].length-Cadenas[v].length);
 			cadans=cc.concat(cadans);
 		}
+		P[U]=-1;
 		U=u;
 	}
 	return cadans;

@@ -23,8 +23,8 @@ function IsBloque(C){
 
 function IsSingular(C){
 	for(var i=0; i<C.length; i++)
-		if(C.indexOf(C[i])!=C.lastIndexOf(C[i])) return false;
-	return true;
+		if(C.indexOf(C[i])!=C.lastIndexOf(C[i])) return true;
+	return false;
 }
 
 function LibrePrefijos(C){

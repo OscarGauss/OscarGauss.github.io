@@ -9,15 +9,22 @@
 	
 	<header>
 	  <h1>Código Unívocamente Decodificable</h1>
-	  <div id="boton" onclick="Procesar_Codigo_UD()">generar</div>
+	  <div id="boton" onclick="Procesar_Codigo_UD('CW', 'form2')">generar</div>
 	</header>
 	<div id="contenido">	  
 	  <table class='tablaprincipal' width='100%'>
 		<tr>
 		  <td colspan="2">
 			<form name="CodeWords" id="form1">
-			  <p>Ingrese las palabras código del Código C</p>
-			  <textarea id="puntos" rows="10" cols="50">000 111 01010</textarea>
+			  <p>Ingrese las palabras código del Código C con un fin de linea de separacion</p>
+			  <textarea id="CW" rows="10" cols="50">010
+0001
+0110
+1100
+00011
+00110
+11110
+101011</textarea>
 			</form>
 		  </td>	
 		</tr>
@@ -25,7 +32,7 @@
 		  <td colspan="2">
 		    <form name="Soluciones" id="form2">
 			  <h1>El Código C es:</h1>
-			</form>
+		    </form>
 		  </td>
 		</tr>
 	  </table>

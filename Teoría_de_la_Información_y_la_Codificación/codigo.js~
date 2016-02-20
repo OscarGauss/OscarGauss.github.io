@@ -1,0 +1,6 @@
+function Procesar_Codigo_UD(area){
+	alert("asf");
+	var CodeWords=document.getElementById(area).value.trim().split("\n");
+	alert(CodeWords);
+	//verificar si es bloque , si es singular si es libre de prefijos etc
+}

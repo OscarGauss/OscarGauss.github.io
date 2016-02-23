@@ -137,16 +137,40 @@ function CadenaAmbigua(C){
 	}
 	return cadans;
 }
+var Aux=new Array(), Cads=new Array();
+var CadenaG;
+function Gen(cad, I){
+	if(I==CadenaG.length) Cads.push(cad);
+	for(var i=0; i<Aux[I].length; i++){
+		Gen(cad.concat("  ,  ").concat(CadenaG.substr(I, Aux[I][i])),I+Aux[I][i])
+	}
+}
+function Decodificar(Cadena, Codigo){
+	CadenaG=Cadena;
+	var N=Cadena.length;
+	for(var i=0; i<N; i++) Aux[i]=-1;
+	Aux[N]=new Array();
+	for(var i=N-1; i>=0; i--)
+		for(var j=i, ans=""; j<N; j++){
+			ans=ans.concat(Cadena.charAt(j));
+			if(Codigo.indexOf(ans)!=-1)
+				if(Aux[j+1]!=-1){
+					if(Aux[i]==-1) Aux[i]=new Array();
+					Aux[i].push(ans.length);
+			}
+		}
+	for(var i=0; i<Aux[0].length; i++)
+		Gen(CadenaG.substr(0, Aux[0][i]),Aux[0][i]);
+}
 function Procesar_Codigo_UD(area, formR){
 	Limpiar_Elements(formR, 0, "p");
 	var CodeWords=Leer(area);
-	//alert(CodeWords);
 	var pp1=document.createElement("p"); //bolque
 	var pp2=document.createElement("p"); //singular
 	var pp3=document.createElement("p"); //libre de prefijos
 	var pp4=document.createElement("p"); //ud
 	var pp5=document.createElement("p"); //ca
-	if(IsBloque(CodeWords)) pp1.appendChild(document.createTextNode("El Código es Bloque\n"));
+	if(IsBloque(CodeWords)) pp1.appendChild(document.createTextNode("El Código es Bloque"));
 	else pp1.appendChild(document.createTextNode("El Código NO es Bloque"));
 	if(IsSingular(CodeWords)) pp2.appendChild(document.createTextNode("El Código es Singular"));
 	else pp2.appendChild(document.createTextNode("El Código NO es Singular"));
@@ -162,5 +186,11 @@ function Procesar_Codigo_UD(area, formR){
 	document.getElementById(formR).appendChild(pp2);
 	document.getElementById(formR).appendChild(pp3);
 	document.getElementById(formR).appendChild(pp4);	
-	document.getElementById(formR).appendChild(pp5);	
+	document.getElementById(formR).appendChild(pp5);
+	var Dec=Decodificar(CadAmb, Leer(area));
+	for(var i=0; i<Cads.length; i++){
+		var pp=document.createElement("p");
+		pp.appendChild(document.createTextNode("Decodificacion #"+(i+1)+": "+Cads[i]));
+		document.getElementById(formR).appendChild(pp);
+	}
 }

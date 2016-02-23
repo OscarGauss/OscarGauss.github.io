@@ -163,6 +163,7 @@ function Decodificar(Cadena, Codigo){
 		Gen(CadenaG.substr(0, Aux[0][i]),Aux[0][i]);
 }
 function Procesar_Codigo_UD(area, formR){
+	Cads=new Array();
 	Limpiar_Elements(formR, 0, "p");
 	var CodeWords=Leer(area);
 	var pp1=document.createElement("p"); //bolque

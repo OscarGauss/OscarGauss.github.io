@@ -173,10 +173,13 @@ function Procesar_Codigo_UD(area, formR){
 	document.getElementById(formR).appendChild(pp3);
 	document.getElementById(formR).appendChild(pp4);	
 	document.getElementById(formR).appendChild(pp5);
-	var Dec=Decodificar(CadAmb, Leer(area));
-	for(var i=0; i<Cads.length; i++){
-		var pp=document.createElement("p");
-		pp.appendChild(document.createTextNode("Decodificacion #"+(i+1)+": "+Cads[i]));
-		document.getElementById(formR).appendChild(pp);
+	if(!IsSingular(Leer(area))){
+		var Dec=Decodificar(CadAmb, Leer(area));
+		for(var i=0; i<Cads.length; i++){
+			var pp=document.createElement("p");
+			pp.appendChild(document.createTextNode("Decodificacion #"+(i+1)+": "+Cads[i]));
+			document.getElementById(formR).appendChild(pp);
+		}
 	}
+	
 }

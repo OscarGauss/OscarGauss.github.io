@@ -60,7 +60,7 @@ function Edge2(a, b, Cads, N){
 	return false;
 }
 function CadenaAmbigua(C){
-	if(!IsSingular(C)){
+	if(IsSingular(C)){
 		for(var i=0; i<C.length; i++)
 			if(C.indexOf(C[i])!=C.lastIndexOf(C[i])) return C[i];
 		

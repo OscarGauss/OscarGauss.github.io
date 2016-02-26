@@ -1,9 +1,7 @@
 function Limpiar_Elements(id, N, element){
 	var aux=document.getElementById(id).getElementsByTagName(element);
-	for(var i=aux.length-1; i>=N; i--){		
-		document.getElementById(id).removeChild(aux[i]);
-	}
-	
+	for(var i=aux.length-1; i>=N; i--)		
+		document.getElementById(id).removeChild(aux[i]);	
 }
 function Leer(area){
 	var CodeWords=document.getElementById(area).value.trim().split("\n");	
@@ -28,14 +26,13 @@ function IsSingular(C){
 }
 
 function LibrePrefijos(C){
-	for(var i=0; i<C.length; i++){
+	for(var i=0; i<C.length; i++)
 		for(var j=i+1; j<C.length; j++){
 			var k=0;
 			for(k=0; k<Math.min(C[i].length, C[j].length); k++)
 				if(C[i].charAt(k)!=C[j].charAt(k)) break;
 			if(k==Math.min(C[i].length, C[j].length)) return false;
 		}
-	}
 	return true;
 }
 function Sufijos(cad){
@@ -60,20 +57,16 @@ function Edge2(a, b, Cads, N){
 	return false;
 }
 function CadenaAmbigua(C){
-	if(IsSingular(C)){
-		alert(C);
+	if(IsSingular(C))
 		for(var i=0; i<C.length; i++)
 			if(C.indexOf(C[i])!=C.lastIndexOf(C[i])) return C[i];
-		
-	}
 	var N=C.length;
 	var Cadenas=C;
 	for(var i=0; i<N; i++){
 		var Suf=Sufijos(C[i]);
 		for(var j=0; j<Suf.length; j++)
 			if(Cadenas.indexOf(Suf[j])==-1) Cadenas.push(Suf[j]);
-	}
-	
+	}	
 	var G=new Array(), P=new Array(), Vis=new Array();
 	for(var i=0; i<Cadenas.length; i++){
 		G[i]=new Array();
@@ -86,14 +79,6 @@ function CadenaAmbigua(C){
 			if(Edge1(i, j, Cadenas, N))	G[i].push({to:j, type:1});
 			if(Edge2(i, j, Cadenas, N)) G[i].push({to:j, type:2});
 		}//Terminno de Armar
-	/*
-	alert(Cadenas);
-	for(var i=0; i<G.length; i++){
-		alert(i+":::");
-		for(var j=0; j<G[i].length; j++)
-			alert(G[i][j].to+","+G[i][j].type);
-	}
-	*/
 	var Q=new Array();
 	for(var i=0; i<N; i++){
 		Q.push(i); P[i]=-1; Vis[i]=1;
@@ -158,7 +143,7 @@ function Decodificar(Cadena, Codigo){
 				if(Aux[j+1]!=-1){
 					if(Aux[i]==-1) Aux[i]=new Array();
 					Aux[i].push(ans.length);
-			}
+				}
 		}
 	for(var i=0; i<Aux[0].length; i++)
 		Gen(CadenaG.substr(0, Aux[0][i]),Aux[0][i]);

@@ -127,9 +127,8 @@ var Aux=new Array(), Cads=new Array();
 var CadenaG;
 function Gen(cad, I){
 	if(I==CadenaG.length) Cads.push(cad);
-	for(var i=0; i<Aux[I].length; i++){
-		Gen(cad.concat("  ,  ").concat(CadenaG.substr(I, Aux[I][i])),I+Aux[I][i])
-	}
+	for(var i=0; i<Aux[I].length; i++)
+		Gen(cad.concat("  ,  ").concat(CadenaG.substr(I, Aux[I][i])),I+Aux[I][i]);
 }
 function Decodificar(Cadena, Codigo){
 	CadenaG=Cadena;

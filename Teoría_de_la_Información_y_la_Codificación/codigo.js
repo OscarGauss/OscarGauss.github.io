@@ -183,3 +183,71 @@ function Procesar_Codigo_UD(area, formR){
 	}
 	
 }
+///////////////////
+
+function Huffman(Fuente_S, r){
+	var plus=(Math.ceil((Fuente_S.S.length-r)/(r-1))*(r-1))+r*1-Fuente_S.S.length; //agregar
+	for(var i=0; i<plus; i++){
+		Fuente_S.S.push("*"); Fuente_S.P.push(0.0);
+	}
+	var Tri=new Array();
+	for(var i=0; i<Fuente_S.S.length; i++) Tri.push({pi:Fuente_S.P[i], id:i, union:-1, wi:""});
+	Tri.sort(function(a, b){return -a.pi+b.pi});
+	var Aux=new Array();
+	var reduc=(Fuente_S.S.length-r)/(r-1);
+	for(var i=0; i<=reduc; i++) Aux[i]=new Array();	
+	for(var i=0; i<Tri.length; i++) Aux[0].push(JSON.parse(JSON.stringify(Tri[i])));
+	for(var i=0; i<reduc; i++){
+		var aux=new Array();
+		for(var j=0; j<Aux[i].length; j++) aux.push(JSON.parse(JSON.stringify(Aux[i][j])));
+		var sum=0.0;		
+		for(var j=1; j<=r; j++) sum+=aux[aux.length-j].pi;
+		for(var j=0; j<r; j++)	aux.pop();
+		for(var j=0; j<aux.length; j++) aux[j].union=-1;
+		aux.push({pi:sum, id:aux.length, union:1, wi:""});
+		aux.sort(function(a, b){return -a.pi+b.pi});
+		for(var j=0; j<aux.length; j++) Aux[i+1].push(JSON.parse(JSON.stringify(aux[j])));
+	}
+	for(var i=0; i<r; i++) Aux[reduc][i].wi=""+i; // caso base q==r
+	for(var i=reduc; i>0; i--){
+		var J=-1;		
+		for(var j=0; j<Aux[i].length && J==-1; j++) if(Aux[i][j].union==1) J=j;
+		var l=0;
+		for(var j=0; j<Aux[i].length; j++){
+			if(j==J) continue;
+			Aux[i-1][l].wi=Aux[i][j].wi;
+			l++;
+		}
+		for(var j=Aux[i-1].length-r, l=0; l<r; j++, l++) Aux[i-1][j].wi=((Aux[i][J].wi).concat(""+l));
+	}
+	var Cod=new Array(); for(var i=0; i<Cod; i++) Cod[i].push("");
+	for(var j=0; j<Aux[0].length; j++) Cod[Aux[0][j].id]=Aux[0][j].wi;
+	for(var j=0; j<plus; j++) Cod.pop();
+	return Cod;
+}
+function Procesar_Huffman(texto, textid, textid2, r){	
+	var S=new Array();
+	var C=new Array();
+	for(var i=0; i<texto.length; i++){
+		var j=S.indexOf(texto.charAt(i));
+		if(j==-1){
+			S.push(texto.charAt(i));
+			C.push(1);
+		}else
+			C[j]++;
+	}
+	for(var i=0; i<S.length; i++)
+		C[i]=C[i]/texto.length;
+	var Fuente_S={S:S, P:C};
+	var Cod=Huffman(Fuente_S, r);
+	var Cad="S_i    \t    P_i             \t   W_i\n";
+	for(var i=0; i<Cod.length; i++){
+		Cad=Cad.concat(Fuente_S.S[i]+" \t "+Fuente_S.P[i]+" \t "+Cod[i]+"\n");
+	}
+	document.getElementById(textid).value=Cad;
+	var mensaje="";
+	for(var i=0; i<texto.length; i++){
+		mensaje=mensaje.concat(Cod[ (Fuente_S.S).indexOf(texto.charAt(i)) ]);
+	}
+	document.getElementById(textid2).value=mensaje;
+}

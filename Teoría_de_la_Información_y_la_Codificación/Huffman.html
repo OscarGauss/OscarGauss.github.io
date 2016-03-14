@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Huffman</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+  <body onload="ini()">
+	
+	<header>
+	  <h1>Huffman</h1>
+	  <div id="boton" onclick="Procesar_Huffman(document.getElementById('Texto').value, 'RESP', 'RESPMSG', document.getElementById('R').value )">generar</div>
+	</header>
+	<div id="contenido">	  
+	  <table class='tablaprincipal' width='100%'>
+		<tr>
+		  <td colspan="2">
+			  <p>Ingrese el texto a codificar</p>
+			  <textarea id="Texto" rows="10" cols="50">Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.</textarea>
+			
+		  </td>	
+		</tr>
+		<tr>
+		  <td colspan="2">
+			  <p>Ingrese el r:</p>
+			  <input id="R" type="text" placeholder="2"/>
+		  </td>	
+		</tr>
+		<tr>
+		  <td colspan="2">
+		    <form name="Soluciones" id="form2">
+			  <h1>El Código C Huffman para el texto es:</h1>
+			  <textarea id="RESP" rows="10" cols="50"></textarea>
+			  <h1>Y el mensaje es:</h1>
+			  <textarea id="RESPMSG" rows="10" cols="50"></textarea>
+		    </form>
+		  </td>
+		</tr>
+	  </table>
+	</div>	
+  </body>
+</html>

@@ -278,5 +278,5 @@ function Procesar_Codificacion_Aritmetica(texto, textid, textid2){
 		I=D-L;
 		//alert(texto.charAt(j)+" "+I+" "+ D);
 	}
-	document.getElementById(textid2).value="["+I+" , "+D+"[";
+	document.getElementById(textid2).value="["+I+" , "+D+"[\nY decir que pare en el "+texto.length+" simbolo decodificado";
 }

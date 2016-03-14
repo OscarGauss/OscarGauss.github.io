@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Codificación Aritmética</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+  <body onload="ini()">
+	
+	<header>
+	  <h1>Codificación Aritmética</h1>
+	  <div id="boton" onclick="Procesar_Codificacion_Aritmetica(document.getElementById('Texto').value, 'RESP', 'RESPMSG')">generar</div>
+	</header>
+	<div id="contenido">	  
+	  <table class='tablaprincipal' width='100%'>
+		<tr>
+		  <td colspan="2">
+			  <p>Ingrese el texto a codificar</p>
+			  <textarea id="Texto" rows="10" cols="50">Lorem ipsum ad his scripta blandit partiendo</textarea>
+			
+		  </td>	
+		</tr>
+		<tr>
+		  <td colspan="2">
+			  <h1>La Fuente de Informacion de memoria nula</h1>
+			  <textarea id="RESP" rows="10" cols="50"></textarea>
+			  <h1>El valor:</h1>
+			  <textarea id="RESPMSG" rows="3" cols="50"></textarea>
+		  </td>
+		</tr>
+	  </table>
+	</div>	
+  </body>
+</html>

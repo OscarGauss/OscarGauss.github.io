@@ -225,7 +225,8 @@ function Huffman(Fuente_S, r){
 	for(var j=0; j<plus; j++) Cod.pop();
 	return Cod;
 }
-function Procesar_Huffman(texto, textid, textid2, r){	
+
+function Proc_Fuente_S(texto){
 	var S=new Array();
 	var C=new Array();
 	for(var i=0; i<texto.length; i++){
@@ -238,7 +239,10 @@ function Procesar_Huffman(texto, textid, textid2, r){
 	}
 	for(var i=0; i<S.length; i++)
 		C[i]=C[i]/texto.length;
-	var Fuente_S={S:S, P:C};
+	return {S:S, P:C};
+}
+function Procesar_Huffman(texto, textid, textid2, r){
+	var Fuente_S=Proc_Fuente_S(texto);
 	var Cod=Huffman(Fuente_S, r);
 	var Cad="S_i    \t    P_i             \t   W_i\n";
 	for(var i=0; i<Cod.length; i++){
@@ -250,4 +254,29 @@ function Procesar_Huffman(texto, textid, textid2, r){
 		mensaje=mensaje.concat(Cod[ (Fuente_S.S).indexOf(texto.charAt(i)) ]);
 	}
 	document.getElementById(textid2).value=mensaje;
+}
+
+function Procesar_Codificacion_Aritmetica(texto, textid, textid2){
+	var Fuente_S=Proc_Fuente_S(texto);
+	//alert(Fuente_S.S+" "+Fuente_S.P);
+	var Cad="S_i    \t    P_i\n";
+	for(var i=0; i<Fuente_S.S.length; i++){
+		Cad=Cad.concat(Fuente_S.S[i]+" \t "+Fuente_S.P[i]+"\n");
+	}
+	document.getElementById(textid).value=Cad;
+	var Acum=new Array();
+	Acum[0]=0.0;
+	for(var i=1; i<=Fuente_S.S.length; i++){
+		Acum[i]=Acum[i-1]+Fuente_S.P[i-1];
+	}
+	var j=0;
+	var I=0.0, D=1.0, L=1.0;
+	for(j=0; j<texto.length; j++){
+		var idx=Fuente_S.S.indexOf(texto.charAt(j))+1;
+		D=I+L*Acum[idx];
+		L=L*Fuente_S.P[idx-1];
+		I=D-L;
+		//alert(texto.charAt(j)+" "+I+" "+ D);
+	}
+	document.getElementById(textid2).value="["+I+" , "+D+"[";
 }

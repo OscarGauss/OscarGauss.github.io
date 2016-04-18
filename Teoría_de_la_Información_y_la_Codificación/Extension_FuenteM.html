@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Extención de una Fuente de Markov</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Extención n-ésima de una Fuente de Markov</h1>
+      <div id="boton" onclick="Extención_Fuente_M('form1', 'form2')">generar</div>
+    </header>
+    <div id="contenido">
+	  <table class='tablaprincipal' width='100%' id="tablaPrin">
+        <tr>
+		  <td width='100%'> <h2>Fuente-M</h2> </td>
+        </tr>
+        <tr>
+		  <td>
+			<form name="gramatica" id="form1">
+			  <p>Alfabeto de la fuente (simbolos de un caracter)</p>
+			  <p>S={<input type="text" id="form1S" placeholder="0 1" value="0 1"/>}</p>
+			  <p>Orden de la fuente</p>
+			  <p>m=<input type="text" id="form1M"  placeholder="2" value="2" size="5"/></p>
+			  <p>Conjunto de probabilidades en forma de matriz P:</p>
+			  <p><textarea id="form1P" rows="20" cols="50">0.8 0 0.5 0
+0.2 0 0.5 0
+0 0.5 0 0.2
+0 1/2 0 8/10</textarea></p>
+			  <!--<p>W</p>
+				  <p><input type="text" id="form1M"  placeholder="1/2 1/2" /></p>-->
+			  <p> N a la que se desea extender la Fuente-M</p>
+			  <p>n=<input type="text" id="form1N" placeholder="2" value="2" size="5"/></p>
+            </form>
+		  </td>
+		</tr>
+		<tr>
+		  <td width='100%'> <h2>Fuente-M <sup>n</sup></h2> </td>
+		</tr>
+		 <tr>
+		  <td>
+			<form name="gramatica" id="form2">
+			  <p>Alfabeto de la fuente</p>
+			  <p>S={<input type="text" id="form2S" />}</p>
+			  <p>Orden de la fuente</p>
+			  <p>m=<input type="text" id="form2M" size="5"/></p>
+			  <p>Conjunto de probabilidades en forma de matriz P:</p>
+			  <!--<p><textarea id="form2P" rows="30" cols="100"></textarea></p>
+			  <!--<p>W</p>
+				  <p><input type="text" id="form1M"  placeholder="1/2 1/2" /></p>-->
+            </form>
+		  </td>
+		</tr>
+	  </table>
+    </div>
+  </body>
+</html>

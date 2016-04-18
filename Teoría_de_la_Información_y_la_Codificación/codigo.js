@@ -280,3 +280,164 @@ function Procesar_Codificacion_Aritmetica(texto, textid, textid2){
 	}
 	document.getElementById(textid2).value="["+I+" , "+D+"[\nY decir que pare en el "+texto.length+" simbolo decodificado";
 }
+
+function Split(text, SW){
+	var A=text.split("\n");
+	var R=new Array();
+	for(var i=0; i<A.length; i++){
+		var B=A[i].split(" ");
+		for(var j=0; j<B.length; j++){
+			B[j]=B[j].trim();
+			if(B[j]!="")
+				if(SW==1) R.push(eval(B[j]));
+				else R.push(B[j]);
+		}
+	}
+	return R;
+}
+function Proc_Fuente_M(form){
+	var S=Split(document.getElementById(form+"S").value, 0);	
+	var M=document.getElementById(form+"M").value;
+	var auxP=Split(document.getElementById(form+"P").value, 1);
+	var qm=Math.pow(S.length, M);
+	//alert(S); alert(auxP); alert(qm);
+	var P=new Array(qm);
+	for(var i=0; i<qm; i++){
+		P[i]=new Array(qm);
+		for(var j=0; j<qm; j++){
+			P[i][j]=auxP[(i*qm)+j];
+		}
+	}
+	//alert("P:"+P+"::"+P[3][3]);
+	var W0=new Array(qm);
+	S.sort();
+	return {S:S, m:M, P:P, W0:W0};
+}
+
+function Elev(Simbolos, N){
+	var NewSimb=new Array();
+	var NewSimbI=new Array();
+	NewSimb.push("");
+	var xd=new Array(); xd.push(-1);
+	NewSimbI.push[0]=new Array(); NewSimbI[0]=xd;
+	for(var i=0; i<N; i++){
+		var Aux_S=new Array();
+		var Aux_SI=new Array();
+		for(var j=0; j<Simbolos.length; j++)
+			for(var k=0; k<NewSimb.length; k++){
+				Aux_S.push(Simbolos[j]+NewSimb[k]);
+				var xd=JSON.parse(JSON.stringify(NewSimbI[k]));
+				xd.unshift(j);
+				Aux_SI[Aux_SI.length]=new Array();
+				Aux_SI[Aux_SI.length-1]=xd;
+			}
+		NewSimb=Aux_S;
+		NewSimbI=Aux_SI;
+	}
+	for(i=0; i<NewSimbI.length; i++) NewSimbI[i].pop();
+	return {S:NewSimb, I:NewSimbI};
+}
+function Extención_Fuente_M(form1, form2){
+	var Fuente_M=Proc_Fuente_M(form1);
+	var n=document.getElementById(form1+"N").value;
+	var S_N=Elev(Fuente_M.S, n);
+	var alfas=JSON.parse(JSON.stringify(Elev(Fuente_M.S, Fuente_M.m)));
+	var u=Math.ceil(Fuente_M.m/n);
+	var Est_N=Elev(S_N.S, u);
+	var M_N=new Array(Est_N.S.length);
+	for(var i=0; i<Est_N.S.length; i++){
+		M_N[i]=new Array(Est_N.S.length);
+		for(var j=0; j<Est_N.S.length; j++)	M_N[i][j]=0.0;
+	}
+	for(var i=0; i<S_N.S.length; i++)
+		for(var j=0; j<Est_N.S.length; j++){
+			var xd=JSON.parse(JSON.stringify(Est_N.I[j])); xd.push(i);
+			xd.shift();
+			var cadxd="";
+			for(var l=0; l<xd.length; l++) cadxd=cadxd+S_N.S[xd[l]];
+			var h=new Array();
+			var cnt=0;
+			for(var k=Est_N.I[j].length-1; k>=0 && cnt<Fuente_M.m; k--){
+				var aux=S_N.I[ Est_N.I[j][k] ];
+				for(var l=aux.length-1; l>=0 && cnt<Fuente_M.m; l--){
+					h.unshift(aux[l]);
+					cnt++;
+				}				
+			}
+			var auxp=1.0;
+			var h1=JSON.parse(JSON.stringify(h));
+			for(var k=0; k<S_N.I[i].length; k++){				
+				h1.push(S_N.I[i][k]); h1.shift();
+				var cadh="";
+				for(var l=0; l<h.length; l++) cadh=cadh+Fuente_M.S[h[l]];
+				var cadh1="";
+				for(var l=0; l<h1.length; l++) cadh1=cadh1+Fuente_M.S[h1[l]];
+				auxp=auxp*Fuente_M.P[ alfas.S.indexOf(cadh1) ][ alfas.S.indexOf(cadh) ];
+				h=JSON.parse(JSON.stringify(h1));
+			}
+			M_N[ Est_N.S.indexOf(cadxd) ][j]=auxp.toFixed(5);
+		}
+	var V=new Array();
+	for(var i=0; i<M_N.length; i++) V[i]=document.createElement("td");
+	var TB=document.createElement("table");	
+	var a1=document.createElement("tr");
+	var b0=document.createElement("td");
+	var atb0 = document.createAttribute("rowspan"); atb0.value="4"; b0.setAttributeNode(atb0);
+	var atb1 = document.createAttribute("align"); atb1.value="center"; TB.setAttributeNode(atb1);
+	a1.appendChild(b0);
+	for(var i=0; i<M_N.length; i++){
+		var q=document.createElement("sub"), r=document.createTextNode(i+1); q.appendChild(r);
+		var q1=document.createElement("sub"), r1=document.createTextNode(i+1); q1.appendChild(r1);
+		var b=document.createElement("td");
+		b.appendChild(document.createTextNode("β")); b.appendChild(q); a1.appendChild(b);
+		V[i].appendChild(document.createTextNode("β")); V[i].appendChild(q1); V[i].appendChild(document.createTextNode(" = ")); 
+	}TB.appendChild(a1);
+	var a2=document.createElement("tr");
+	for(var i=0; i<M_N.length; i++){
+		var b=document.createElement("td");
+		for(var j=0; j<Est_N.I[i].length; j++){
+			var q=document.createElement("sub"), r=document.createTextNode(Est_N.I[i][j]+1); q.appendChild(r);
+			var q1=document.createElement("sub"), r1=document.createTextNode(Est_N.I[i][j]+1); q1.appendChild(r1);
+			b.appendChild(document.createTextNode("σ")); b.appendChild(q);
+			V[i].appendChild(document.createTextNode("σ")); V[i].appendChild(q1);
+		}
+		V[i].appendChild(document.createTextNode(" = "));
+		a2.appendChild(b);		
+	}TB.appendChild(a2);
+	var a3=document.createElement("tr");
+	for(var i=0; i<M_N.length; i++){
+		var b=document.createElement("td");
+		for(var j=0; j<Est_N.I[i].length; j++){
+			for(var k=0; k<S_N.I[Est_N.I[i][j]].length; k++){				
+				var q=document.createElement("sub"), r=document.createTextNode(S_N.I[Est_N.I[i][j]][k]+1); q.appendChild(r);
+				var q1=document.createElement("sub"), r1=document.createTextNode(S_N.I[Est_N.I[i][j]][k]+1); q1.appendChild(r1);
+				b.appendChild(document.createTextNode("s")); b.appendChild(q);
+				V[i].appendChild(document.createTextNode("s")); V[i].appendChild(q1);
+			}
+		}
+		V[i].appendChild(document.createTextNode(" = ")); 
+		a3.appendChild(b);		
+	}TB.appendChild(a3);
+	var a4=document.createElement("tr");
+	for(var i=0; i<M_N.length; i++){
+		var b=document.createElement("td");
+		b.appendChild(document.createTextNode(Est_N.S[i]));
+		V[i].appendChild(document.createTextNode(Est_N.S[i]));
+		a4.appendChild(b);		
+	}TB.appendChild(a4);
+	for(var i=0; i<M_N.length; i++){
+		var a=document.createElement("tr");
+		a.appendChild(V[i]);
+		for(var j=0; j<M_N.length; j++){
+			var b=document.createElement("td");
+			b.appendChild(document.createTextNode(M_N[i][j]));
+			a.appendChild(b);
+		}
+		TB.appendChild(a);
+	}
+	document.getElementById(form2+"S").value=S_N.S.join(" ");
+	document.getElementById(form2+"M").value=u;
+	Limpiar_Elements("tablaPrin", 0, "table")
+	document.getElementById("tablaPrin").appendChild(TB);
+	//alert("TERMINO");
+}

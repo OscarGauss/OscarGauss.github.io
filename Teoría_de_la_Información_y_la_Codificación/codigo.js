@@ -441,3 +441,32 @@ function Extención_Fuente_M(form1, form2){
 	document.getElementById("tablaPrin").appendChild(TB);
 	//alert("TERMINO");
 }
+
+function POW(b, e, mod){
+	if(e==0) return 1;
+	var aux=POW(b, Math.floor(e/2), mod);
+	aux=(aux*aux)%mod;
+	if((e%2)!=0) aux=(aux*b)%mod;
+	return aux;
+}
+
+function Procesar_RSACifrar(texto, Pub, TextArea){
+	var TextoASCCI=new Array();
+	for(var i=0; i<texto.length; i++){
+		TextoASCCI.push(texto.charCodeAt(i));
+		TextoASCCI[i]=POW(TextoASCCI[i], Pub.e, Pub.n);
+	}
+	TextArea.value=TextoASCCI.join("-");	
+}
+
+function Procesar_RSADeCifrar(texto, Pub, TextArea){
+	var TextoCif=new Array();
+	TextoCif=texto.split("-");
+	for(var i=0; i<TextoCif.length; i++){
+		TextoCif[i]=eval(TextoCif[i]);
+		TextoCif[i]=POW(TextoCif[i], Pub.d, Pub.n);
+		TextoCif[i]=String.fromCharCode(TextoCif[i]);
+	}
+	TextArea.value=TextoCif.join("");
+	
+}

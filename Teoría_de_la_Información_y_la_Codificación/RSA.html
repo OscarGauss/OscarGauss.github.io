@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Codificación Aritmética</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+  <body onload="ini()">
+	
+	<header>
+	  <h1>RSA</h1>
+	  
+	</header>
+	<div id="contenido">	  
+	  <table class='tablaprincipal' width='100%'>
+		<tr>
+		  <td width='50%'><h1>CIFRAR</h1><div id="boton" onclick="Procesar_RSACifrar(document.getElementById('TextoCifrar').value, {n:document.getElementById('Pubn1').value, e:document.getElementById('Pube').value}, document.getElementById('TextoCifrado'))">generar</div>
+		  </td>
+		  <td width='50%'><h1>DE-CIFRAR</h1><div id="boton" onclick="Procesar_RSADeCifrar(document.getElementById('TextoDecifrar').value, {n:document.getElementById('Pubn2').value, d:document.getElementById('Pubd').value}, document.getElementById('TextoDecifrado'))">generar</div>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+			<p> Ingrese llave publica al que se desea enviar el mensaje</P>
+			<p> n=<input id="Pubn1" type="text" placeholder="64523" value="64523"/> , e=<input id="Pube" type="text" placeholder="127" value="127"/> </p>
+		  </td>
+		  <td>
+			<p> Ingrese llave privada</P>
+			<p> n=<input id="Pubn2" type="text" placeholder="64523" value="64523"/> ,d=<input id="Pubd" type="text" placeholder="15583" value="15583"/></p>
+		  </td>
+		</tr>
+		<tr>			
+		  <td>
+			<p>Ingrese el mensaje a cifrar</p>
+			<textarea id="TextoCifrar" rows="10" cols="50">Lorem ipsum ad his scripta blandit partiendo</textarea>			
+		  </td>
+		  <td>
+			<p>Ingrese el mensaje cifrado</p>
+			<p>El mensaje debe haber sido cifrado letra por letra agarrando su valor ASCII de cada letra separado con un guion por cada letra cifrada</p>
+			<textarea id="TextoDecifrar" rows="10" cols="50">37788-57858-15143-4304-109-42569-799-54917-41356-23056-109-42569-44958-51898-42569-45222-799-41356-42569-41356-9167-15143-799-54917-32146-44958-42569-62617-4966-44958-27518-51898-799-32146-42569-54917-44958-15143-32146-799-4304-27518-51898-57858</textarea>			
+		  </td>
+		  
+		</tr>
+		<tr>			
+		  <td>
+			<p>Mensaje cifrado</p>
+			<p>El mensaje a sido cifrado letra por letra agarrando su valor ASCII de cada letra separado por un guion por cada letra cifrada</p>
+			<textarea id="TextoCifrado" rows="10" cols="50"></textarea>
+		  </td>	
+		  <td>
+			<p>Mensaje descifrado</p>
+			<textarea id="TextoDecifrado" rows="10" cols="50"></textarea>
+			
+		  </td>	
+		</tr>
+	  </table>
+	</div>	
+  </body>
+</html>

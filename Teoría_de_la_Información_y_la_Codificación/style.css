@@ -10,7 +10,7 @@ header {
 	letter-spacing: 4px;
 }
 
-#boton {	background: #5882FA; }
+#boton {	background: #5882FA; font-size: 200%; text-transform: uppercase; letter-spacing: 4px; }
 
 #boton:hover{ background: #A7C9FF; color: #5882FA; }
 

@@ -290,7 +290,7 @@ function Split(text, SW){
 			B[j]=B[j].trim();
 			if(B[j]!="")
 				if(SW==1) R.push(eval(B[j]));
-				else R.push(B[j]);
+			else R.push(B[j]);
 		}
 	}
 	return R;
@@ -454,7 +454,7 @@ function Procesar_RSACifrar(texto, Pub, TextArea){
 	var TextoASCCI=new Array();
 	for(var i=0; i<texto.length; i++){
 		TextoASCCI.push(texto.charCodeAt(i));
-		TextoASCCI[i]=POW(TextoASCCI[i], Pub.e, Pub.n);
+		TextoASCCI[i]=POWBI(BigInteger(TextoASCCI[i]), BigInteger(Pub.e), BigInteger(Pub.n)).toString();
 	}
 	TextArea.value=TextoASCCI.join("-");	
 }
@@ -463,10 +463,104 @@ function Procesar_RSADeCifrar(texto, Pub, TextArea){
 	var TextoCif=new Array();
 	TextoCif=texto.split("-");
 	for(var i=0; i<TextoCif.length; i++){
-		TextoCif[i]=eval(TextoCif[i]);
-		TextoCif[i]=POW(TextoCif[i], Pub.d, Pub.n);
+		TextoCif[i]=POWBI(BigInteger(TextoCif[i]), BigInteger(Pub.d), BigInteger(Pub.n)).toString();
 		TextoCif[i]=String.fromCharCode(TextoCif[i]);
 	}
 	TextArea.value=TextoCif.join("");
-	
+}
+function POWBI(b, e, mod){
+	if(e.toString()=="0") return BigInteger("1");
+	var aux=POWBI(b, e.divide("2"), mod);
+	aux=(aux.multiply(aux)).remainder(mod);
+	if(e.isOdd()) aux=aux.multiply(b).remainder(mod);
+	return aux;
+}
+
+function NumRnd(n){
+	var cad="";
+	for(var i=0; i<n; i++){
+		cad=cad+Math.floor((Math.random() * 10) + 1); 
+	}
+	return cad;
+}
+
+function MCD(num1, num2){
+	var a=BigInteger();
+	if(num1.subtract(num2).isNegative()){
+		a=num2; num2=num1; num1=a;
+	}
+	while((num1.remainder(num2)).toString()!="0"){
+		a=num1;
+		num1=num2;
+		num2=a.remainder(num2);
+	}
+	return num2;
+}
+function modmulinv(a, b){
+	var b0=b, t, q;
+	var x0=BigInteger("0"), x1=BigInteger("1");
+	if(b.toString()=="1") return BigInteger("1");
+	while(a.subtract("2").isPositive()){
+		q=a.divide(b);
+		t=b; b=a.remainder(b); a=t;
+		t=x0; x0=x1.subtract(q.multiply(x0)); x1=t;
+	}
+	if(x1.isNegative()) x1=x1.add(b0);
+	return x1;
+}
+
+function Procesar_RSAGEN(Textn, Texte, Textd, nd){
+	/*var dl=modmulinv(BigInteger("91862383885"), BigInteger("100002").multiply("1000032")); */
+	var p=NumRnd(nd);
+	while(!EsPrimo(BigInteger(p))){	p=NumRnd(nd); } 
+	var q=NumRnd(nd);
+	while(!EsPrimo(BigInteger(q))) q=NumRnd(nd);
+	//alert(p+" "+q);
+	var n=BigInteger(p).multiply(q);
+	var pe=(BigInteger(p).subtract("1")).multiply( BigInteger(q).subtract("1") );
+	var e=NumRnd(pe.toString().length-1);
+	while(MCD(BigInteger(e), pe).toString()!="1"){
+		e=NumRnd(pe.toString().length-1);
+	}
+	var d=modmulinv(BigInteger(e), pe);
+	if((BigInteger(e).multiply(d)).remainder(pe).toString()!="1") Procesar_RSAGEN(Textn, Texte, Textd, nd);
+	Textn.value=n;
+	Texte.value=e;
+	Textd.value=d;
+}
+function EsPrimo(N){
+	var primo=new Array(2,3,5,7,11,13,17,19,23,29,31,37);
+	if(N.subtract("41").isNegative()){
+		for(var i=0;i<12;++i)if(BigInteger(primo[i]).toString()==N.toString())return true;
+		//alert("NO");
+		return false;
+	}
+	if(N.isEven()) return false;		
+	var s=0;
+	var d=N.subtract("1");
+	var N1=N.subtract("1");
+	while( d.isEven() ){
+		d=d.divide("2");
+		s++;
+	}
+	//alert(s+" d: "+d.toString());
+	var a=BigInteger(), u=BigInteger(), j=BigInteger();
+	for(var i=0; i<=11; i++){
+		a=BigInteger(primo[i]);
+		u=POWBI(a, d, N);
+		//alert("uu:"+u.toString());
+		if(u.toString()!="1" && u.toString()!=N1.toString()){
+			j=1;
+			while(j<s && u.toString()!=N1.toString()){				
+				u=(u.multiply(u)).remainder(N);
+				//alert(a+" "+u.toString());
+				if(u.toString()=="1") { return false;}
+				j++;
+			}
+			//alert("igu? "+u.toString()+" "+N1.toString());
+			if(u.toString()!=N1.toString()){//alert("iguales"+u.toString()+" "+N1.toString());
+				return false; }
+		}
+	}
+	return true;
 }

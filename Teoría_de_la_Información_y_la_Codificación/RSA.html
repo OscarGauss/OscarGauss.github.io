@@ -4,6 +4,7 @@
     <title>Codificación Aritmética</title>
     <link href="style.css" type="text/css" rel="stylesheet"/>
     <script src="codigo.js"></script>
+    <script src="biginteger.js"></script>
   </head>
   <body onload="ini()">
 	
@@ -22,11 +23,11 @@
 		<tr>
 		  <td>
 			<p> Ingrese llave publica al que se desea enviar el mensaje</P>
-			<p> n=<input id="Pubn1" type="text" placeholder="64523" value="64523"/> , e=<input id="Pube" type="text" placeholder="127" value="127"/> </p>
+			<p> n=<input id="Pubn1" type="text" placeholder="100006300099" value=""/> , e=<input id="Pube" type="text" placeholder="91862383885" value=""/> </p>
 		  </td>
 		  <td>
 			<p> Ingrese llave privada</P>
-			<p> n=<input id="Pubn2" type="text" placeholder="64523" value="64523"/> ,d=<input id="Pubd" type="text" placeholder="15583" value="15583"/></p>
+			<p> n=<input id="Pubn2" type="text" placeholder="100006300099" value=""/> ,d=<input id="Pubd" type="text" placeholder="12613" value=""/></p>
 		  </td>
 		</tr>
 		<tr>			
@@ -52,6 +53,19 @@
 			<textarea id="TextoDecifrado" rows="10" cols="50"></textarea>
 			
 		  </td>	
+		</tr>
+		<tr>
+		  
+		  <td colspan='2'><h1>Generar Claves RSA</h1><div id="boton" onclick="Procesar_RSAGEN(document.getElementById('Prin'),document.getElementById('Prie'),document.getElementById('Prid'),document.getElementById('PriND').value)">generar</div>
+		  </td>
+		</tr>
+		<tr>
+		  <td colspan='2'>
+		  <p> cantidad de digitos de los primos a generar: <input id="PriND" type="text" ="10" value="10"  size='10'/></p>
+		  <p> n=<input id="Prin" type="text" ="64523" value="64523"  size='50'/></p>
+		  <p> e=<input id="Prie" type="text" placeholder="127" value="127" size='50'/> </p>
+		  <p> d=<input id="Prid" type="text" placeholder="15583" value="15583" size='50'/></p>
+		  </td>
 		</tr>
 	  </table>
 	</div>	

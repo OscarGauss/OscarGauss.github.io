@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Codificación</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+  <body onload="ini()">
+	
+	<header>
+	  <h1>Codificacion</h1>
+	  
+	</header>
+	<div id="contenido">	  
+	  <table class='tablaprincipal' width='100%'>
+		<tr>
+		  <td width='50%'><h1>CIFRAR</h1><div id="boton" onclick="Procesar_Cifrar(document.getElementById('TextoCifrar').value, document.getElementById('palabra1').value, document.getElementById('TextoCifrado'))">generar</div>
+		  </td>
+		  <td width='50%'><h1>DE-CIFRAR</h1><div id="boton" onclick="Procesar_DeCifrar(document.getElementById('TextoDecifrar').value, document.getElementById('palabra2').value, document.getElementById('TextoDecifrado'))">generar</div>
+		  </td>
+		</tr>
+		<tr>
+		  <td>
+			<p> Palabra</P>
+			<p> <input id="palabra1" type="text" placeholder="HolaMundo" value="HolaMundo"/> </p>
+		  </td>
+		  <td>
+			<p> Palabra</P>
+			<p> <input id="palabra2" type="text" placeholder="HolaMundo" value="HolaMundo"/> </p>
+		  </td>
+		</tr>
+		<tr>			
+		  <td>
+			<p>Ingrese el mensaje a cifrar</p>
+			<textarea id="TextoCifrar" rows="10" cols="50">CarvajalYucraOscar9895530</textarea>			
+		  </td>
+		  <td>
+			<p>Ingrese el mensaje cifrado</p>
+			<textarea id="TextoDecifrar" rows="10" cols="50"></textarea>			
+		  </td>
+		  
+		</tr>
+		<tr>			
+		  <td>
+			<p>Mensaje cifrado</p>
+			<textarea id="TextoCifrado" rows="10" cols="50"></textarea>
+		  </td>	
+		  <td>
+			<p>Mensaje descifrado</p>
+			<textarea id="TextoDecifrado" rows="10" cols="50"></textarea>
+			
+		  </td>	
+		</tr>
+		<tr>
+	  </table>
+	</div>	
+  </body>
+</html>

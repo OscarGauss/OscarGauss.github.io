@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cerradura</title>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <script src="codigo.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Algoritmo para cálculo de cerradura de atributos</h1>
+      <div id="boton" onclick="procesar_cerradura('form1', 'form2')">generar</div>
+    </header>
+    <div id="contenido">
+	  <table class='tablaprincipal' width='100%'>
+        <tr>
+		  <th width='50%'>
+            <h1>Datos</h1>
+		  </th>
+		  <th width='50%'>
+            <h1>Cerradura</h1>
+		  </th>
+        </tr>
+        <tr>
+		  <td>
+			<form name="gramatica" id="form1">
+			  <h2>Atributos</h2>
+			  <p><input type="text" name="atrib" id="form1atrib" placeholder="A, B, C" /></p>
+			  <h2>Procesar cerradura de:</h2>
+			  <p><input type="text" name="cerr" id="form1cerr" placeholder="AB" /></p>
+			  <h2>Dependencias Funcionales</h2>
+			  <p># Depencias Funcionales 
+                <input type="text" name="ndf" id="form1ndf" placeholder="2" maxlength="2" size="4" />
+                <input type="button" value="CLIC" onclick="crear_tabla_cerr('form1')"/>
+			  </p>
+			  
+            </form>
+		  </td>
+		  <td>
+            <form name="gramatica" id="form2">
+			  <h2>Cerradura de </h2>
+			  <p><input type="text" name="atrib" id="form2atrib" /></p>
+			  <p>Es:</p>
+			  <p><input type="text" name="cerr" id="form2cerr" /></p>
+			  
+            </form>
+		  </td>
+		<tr>
+		  <td>
+			<div id="boton" onclick="limpiar_cerr('form1')">Limpiar</div>
+		  </td>
+		  <td>
+			<div id="boton" onclick="limpiar_gram('form2')">Limpiar</div>
+		  </td>
+		</tr>
+        </tr>
+	  </table>
+    </div>
+  </body>
+</html>

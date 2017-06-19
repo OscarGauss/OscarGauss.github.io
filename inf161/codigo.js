@@ -109,7 +109,7 @@ function guardar_relacion(form, car){
 	return {A:A, DF:aux};
 }
 function procesar_cerradura(nom1, nom2){
-	alert("cerradura");
+	//alert("cerradura");
 	var R = guardar_relacion(nom1, ",");
 	var X = document.getElementById(nom1+"cerr").value.trim().split("");	
 	document.getElementById(nom2+"atrib").value=X.join(",");
